@@ -2,5 +2,13 @@ body {
     font-family: "Lato", sans-serif;
     font-weight: 100;
     font-style: normal;
-    background-color: #D1E4E4;
+    background-color: black;
+    color: white;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    body{
+        font-size: 0.7em;
+    }
 }

@@ -1,0 +1,24 @@
+{% load static %}
+<div class="navbar">
+    <div class="logo-wrapper">
+        <a href=""><img class="safesite_image" src="{% static 'header/SafeSite.PNG' %}" alt="SafeSite_img"></a>
+        <h2 class="title">SafeSite</h2>
+    </div>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+    <ul>
+        <li><a href="">Header Test</a></li>
+        <li><a href="">Header Test</a></li>
+        <li><a href="">Header Test</a></li>
+        <li><a href="">Header Test</a></li>
+        <li><a href="">Header Test</a></li>
+    </ul>
+</div>
+
+<script>
+function toggleMenu() {
+  var ul = document.querySelector('.navbar ul');
+  ul.classList.toggle('show');
+}
+</script>
