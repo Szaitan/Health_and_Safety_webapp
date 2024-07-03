@@ -1,0 +1,19 @@
+.footer-buttons {
+    color: white;
+}
+
+.footer-buttons:hover {
+    color: #00e600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: lightgrey;
+}
+
+.footer-bar {
+    background-color: #1a1a1a;
+    border-top: 1px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to right, #b3ffda, #00e600);
+    border-width: 1px;
+
+}
