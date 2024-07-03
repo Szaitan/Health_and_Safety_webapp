@@ -2,24 +2,34 @@
 {% load static %}
 
 {% block title %}Intro Page{% endblock %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'webapp/intro_page/css/intro_page.css' %}">
+{% endblock %}
 
 {% block content %}
 {% include 'header.html' %}
-    <h1>Test of page</h1>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
-    <h2>{{ year }}</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 image-container">
+            <img src="{% static 'webapp/intro_page/images/intro_pag_first_img.jpg' %}" alt="intro_page_first_img" class="w-100">
+        </div>
+        <div class="col-lg-3 ms-auto">
+            <h3 class="p-3 first-image-text">Welcome to SafeSite</h3>
+            <p class="first-image-text">SafeSite is a web application designed to enhance workplace safety by allowing users to easily submit Health, Safety, and Environmental (HSE) reports. Our platform not only facilitates the quick and efficient reporting of safety incidents and observations but also offers powerful analytical tools to help you identify trends, uncover insights, and drive improvements in safety protocols. Ensure a safer work environment with SafeSite.</p>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 text-center my-2">
+            <button type="button" class="btn btn-secondary log-reg-button">Login</button>
+        </div>
+        <div class="col-lg-6 text-center my-2">
+            <button type="button" class="btn btn-secondary log-reg-button">Register</button>
+        </div>
+    </div>
+</div>
+<hr>
 {% include 'footer.html' %}{% with year=year %}{% endwith %}
 {% endblock %}
