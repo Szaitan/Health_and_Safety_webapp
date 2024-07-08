@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SafeSite Login{% endblock %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'webapp/login_page/css/login_page.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+    <div class="container">
+        <div class="row log-div">
+            <div class="col-lg-12">
+                <form action="{% url 'login_page' %}" method="POST">
+                    <h3 class="m-3">Log in to SafeSite</h3>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    {% endfor %}
+                    <div class="form-group">
+                        <input type="checkbox" id="show-password" onclick="TogglePassword()"> Show Password
+                    </div>
+                    <button class="btn btn-secondary log-in-button mx-auto m-2">Log In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+
+<script src="{% static 'webapp/login_page/js/login_page.js' %}"></script>
+{% endblock %}
+

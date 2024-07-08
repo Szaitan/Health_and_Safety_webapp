@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Intro Page{% endblock %}
+{% block title %}SafeSite Intro{% endblock %}
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'webapp/intro_page/css/intro_page.css' %}">
 {% endblock %}
@@ -23,7 +23,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 text-center my-2">
-            <a href="{% url 'intro_page' %}" class="btn btn-secondary log-reg-button" role="button">Login</a>
+            <a href="{% url 'login_page' %}" class="btn btn-secondary log-reg-button" role="button">Login</a>
         </div>
         <div class="col-lg-6 text-center my-2">
             <a href="{% url 'intro_page' %}" class="btn btn-secondary log-reg-button" role="button">Register</a>
