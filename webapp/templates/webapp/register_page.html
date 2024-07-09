@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register Page{% endblock %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'webapp/register_page/css/register_page.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+    <div class="container">
+        <div class="row log-div m-4">
+            <div class="col-lg-12">
+                <form action="{% url 'register_page' %}" method="POST">
+                    <h3 class="m-3">Your registration form will be sent to company for verification:</h3>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    {% endfor %}
+                    <button class="btn btn-secondary register-button mx-auto m-2">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% include 'footer.html' %}{% with year=year %}{% endwith %}
+{% endblock %}
