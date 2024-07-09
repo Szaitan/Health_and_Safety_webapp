@@ -18,3 +18,14 @@
 .log-reg-button:hover {
     color: #00e600;
 }
+
+#icon-grid {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 2s ease, opacity 4s ease;
+}
+
+#icon-grid.show {
+    transform: translateX(0);
+    opacity: 1;
+}
