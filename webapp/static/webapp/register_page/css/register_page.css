@@ -5,7 +5,8 @@
     align-items: center;
 }
 
-#id_email, #id_password {
+#id_customer_companies, #id_name, #id_last_name,
+ #id_company, #id_email{
     display: block;
     margin: 10px auto;
     padding: 5px;
@@ -17,7 +18,7 @@ label {
     font-size: 1.2em;
 }
 
-.log-in-button {
+.register-button {
     background-color: #1a1a1a;
     height: 10%;
     padding: 18px;
@@ -26,14 +27,14 @@ label {
     text-align: center;
 }
 
-.log-in-button:hover {
+.register-button:hover {
     color: #00e600;
 }
 
 .log-div {
     text-align: center; /* Center objects in the area */
     width: 60%;
-    height: 50vh;
+    height: auto;
     background-color: #1a1a1a;
     border-radius: 10%;
     align-items: center;
@@ -41,7 +42,8 @@ label {
 
 
 @media screen and (max-width: 700px) {
-    #id_email, #id_password {
+    #id_customer_companies, #id_name, #id_last_name,
+     #id_company, #id_email {
         width: 80%;
     }
 
@@ -49,7 +51,7 @@ label {
     font-size: 1.8em;
     }
 
-    .log-in-button {
+    .register-button {
         padding: 18px;
         width: 40%;
     }

@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    {% include 'footer.html' %}
+{% include 'footer.html' %}{% with year=year %}{% endwith %}
 
 <script src="{% static 'webapp/login_page/js/login_page.js' %}"></script>
 {% endblock %}

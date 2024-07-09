@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top navigation-bar">
     <div class="container-fluid">
         <img src="{% static 'general_images/SafeSite.PNG' %}" alt="Bootstrap" width="40px" height="40px">
-        <a class="navbar-brand navbar-buttons navbar-title mr-2" href="#">SafeSite</a>
+        <a class="navbar-brand navbar-buttons navbar-title mr-2" href="{% url 'intro_page' %}">SafeSite</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,13 +19,13 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link navbar-buttons" aria-current="page" href="#">Home</a>
+                  <a class="nav-link navbar-buttons" aria-current="page" href="{% url 'intro_page' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link navbar-buttons" href="#">Login</a>
+                  <a class="nav-link navbar-buttons" href="{% url 'login_page' %}">Login</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link navbar-buttons" href="#">Register</a>
+                  <a class="nav-link navbar-buttons" href="{% url 'register_page' %}">Register</a>
                 </li>
             </ul>
         </div>
