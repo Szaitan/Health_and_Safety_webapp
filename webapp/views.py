@@ -1,8 +1,10 @@
 from django.shortcuts import render, reverse, redirect
 from django.views import View
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .views_functions import register_send_email
 from webapp.forms import LoginForm, RegisterForm
-from .models import CustomerCompany, CustomerCompanyEmails
+from .models import CustomerCompanyEmails, CustomUser
 import datetime
 
 
@@ -15,6 +17,8 @@ def get_year():
 # Intro Page View
 class IntroPageView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            print(request.user.user_projects.all()[0].name)
         return render(request, "webapp/intro_page.html", {
             "year": get_year()
         })
@@ -28,8 +32,29 @@ class LoginPageView(View):
         })
 
     def post(self, request):
-        #  To be added after database classes are finished
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            clean_data = form.cleaned_data
+            user = authenticate(username=clean_data["email"], password=clean_data["password"])
+            print(clean_data["email"], clean_data["password"])
+            if user is not None:
+                login(request, user)
+                return redirect("index_page")
+            else:
+                print("Nope")
+
+            return render(request, "webapp/login_page.html", {
+                "form": LoginForm(),
+                "year": get_year()}
+                          )
+
         return redirect(reverse("login_page"))
+
+
+class LogoutPage(View):
+    def get(self, request):
+        logout(request)
+        return redirect("intro_page")
 
 
 class RegisterPageView(View):
@@ -50,5 +75,12 @@ class RegisterPageView(View):
 
         return render(request, "webapp/register_page.html", {
             "form": RegisterForm(),
+            "year": get_year()
+        })
+
+
+class IndexPage(View):
+    def get(self, request):
+        return render(request, "webapp/index_page.html", {
             "year": get_year()
         })

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 
@@ -18,3 +19,42 @@ class CustomerCompany(models.Model):
         return f"{self.name}"
 
 
+class Project(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    company = models.ForeignKey(CustomerCompany, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class CustomUserManager(BaseUserManager):
+    # Do update przy formularu, któryu będzie tworzył usera
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username.strip(), email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(username, email, password, **extra_fields)
+
+
+# It's my CustomUser
+class CustomUser(AbstractUser):
+    user_type = models.CharField(max_length=20, choices=(("normal", "Normal"),
+                                                         ("hse_inspector", "HSE Inspector")))
+    user_projects = models.ManyToManyField(Project)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
