@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse, redirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .views_functions import register_send_email
 from webapp.forms import LoginForm, RegisterForm
 from .models import CustomerCompanyEmails, CustomUser
@@ -79,7 +80,7 @@ class RegisterPageView(View):
         })
 
 
-class IndexPage(View):
+class IndexPage(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, "webapp/index_page.html", {
             "year": get_year()
