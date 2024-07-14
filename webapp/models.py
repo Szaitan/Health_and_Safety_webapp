@@ -29,11 +29,11 @@ class Project(models.Model):
 
 class CustomUserManager(BaseUserManager):
     # Do update przy formularu, któryu będzie tworzył usera
-    def create_user(self, username, email, password=None, **extra_fields):
+    def create_user(self, username, email, password, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
-        user = self.model(username=username.strip(), email=email, **extra_fields)
+        user = self.model(username=username.strip(), email=email, password=password, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
