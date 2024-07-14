@@ -18,8 +18,13 @@ def get_year():
 # Intro Page View
 class IntroPageView(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            print(request.user.user_projects.all()[0].name)
+        # Test to check about user
+        # if request.user.is_authenticated:
+        #     print(request.user.user_projects.all()[0].name)
+
+        # Test with creation of superuser
+        # CustomUser.objects.create_user(username="test2", email="krepcio@wp.pl", password="A1@sd$45G$",
+        #                                first_name="Dupa", last_name="Dupp", user_type="normal")
         return render(request, "webapp/intro_page.html", {
             "year": get_year()
         })

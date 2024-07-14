@@ -137,5 +137,8 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Direct app which user model should it be using
 AUTH_USER_MODEL = 'webapp.CustomUser'
+
+# Direct the page to which logout person should be redirected
 LOGIN_URL = "login_page"
