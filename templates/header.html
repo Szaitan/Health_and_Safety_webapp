@@ -8,27 +8,29 @@
         </button>
         <div class="collapse navbar-collapse ms-auto" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle navbar-buttons" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Options
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'intro_page' %}">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle navbar-buttons" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Options
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if user.user_type == "hse_inspector" %}<li><a class="dropdown-item" href="{% url 'intro_page' %}">Register company</a></li>{% endif %}
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                   <a class="nav-link navbar-buttons" aria-current="page" href="{% url 'intro_page' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link navbar-buttons" href="{% url 'register_page' %}">Register</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                       <a class="nav-link navbar-buttons" href="{% url 'logout_page' %}">Logout</a>
                     </li>
                 {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link navbar-buttons" href="{% url 'register_page' %}">Register</a>
+                    </li>
                     <li class="nav-item">
                       <a class="nav-link navbar-buttons" href="{% url 'login_page' %}">Login</a>
                     </li>
