@@ -1,0 +1,65 @@
+.add-button {
+    background-color: #1a1a1a;
+    height: 10%;
+    padding: 18px;
+    width: 40%;
+    display: block;
+    text-align: center;
+}
+
+.add-button:hover {
+    color: #00e600;
+}
+
+.add-div {
+    text-align: center; /* Center objects in the area */
+    width: 60%;
+    height: auto;
+    background-color: #1a1a1a;
+    border-radius: 10%;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.container {
+    display: flex;
+    min-height: 83vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.errorlist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: red;
+}
+
+label {
+    font-size: 1.2em;
+}
+
+#id_company, #id_email, #id_first_name, #id_last_name, #id_project, #id_password, #id_user_type {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+    width: 40%;
+    text-font: 40px;
+}
+
+@media screen and (max-width: 700px) {
+    #id_company, #id_email, #id_first_name, #id_last_name, #id_project, #id_password, #id_user_type {
+        width: 80%;
+    }
+
+    label {
+    font-size: 1.8em;
+    }
+
+    .log-in-button {
+        padding: 18px;
+        width: 40%;
+    }
+
+}

@@ -1,10 +1,9 @@
 from django.shortcuts import render, reverse, redirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .views_functions import register_send_email
-from webapp.forms import LoginForm, RegisterForm
+from webapp.forms import LoginForm, RegisterForm, AddUserForm
 from .models import CustomerCompanyEmails, CustomUser
 import datetime
 
@@ -16,6 +15,46 @@ def get_year():
 
 
 # Intro Page View
+class AddUserPage(LoginRequiredMixin, View):
+    def get(self, request):
+        form = AddUserForm(user=request.user)
+        return render(request, "webapp/add_user_page.html", {
+            "form": form,
+            "year": get_year()
+        })
+
+    def post(self, request):
+        form = AddUserForm(request.POST, user=request.user)
+        print(form.errors)
+        if form.is_valid():
+            project = form.cleaned_data["project"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            company = form.cleaned_data["company"]
+            email = form.cleaned_data["email"]
+            user_type = form.cleaned_data["user_type"]
+            password = form.cleaned_data["password"]
+            print(project)
+            print(type(project.name))
+            print(first_name)
+            print(last_name)
+            print(company)
+            print(email)
+            print(user_type)
+            print(password)
+            # Create the new user
+            user = CustomUser.objects.create_user(username=email.split('@')[0], email=email,
+                                                  password=password, first_name=first_name,
+                                                  last_name=last_name, user_type=user_type)
+            user.user_projects.add(project)
+            user.save()
+            return redirect("add_user_page")
+        return render(request, "webapp/add_user_page.html", {
+            "form": form,
+            "year": get_year(),
+        })
+
+
 class IntroPageView(View):
     def get(self, request):
         # Test to check about user

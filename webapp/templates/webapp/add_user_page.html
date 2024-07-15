@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}SafeSite - Add User{% endblock %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'webapp/add_user_page/css/add_user_page.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+    <div class="container">
+        <div class="row add-div">
+            <div class="col-lg-12">
+                <form action="{% url 'add_user_page' %}" method="POST">
+                    <h3 class="m-3">Add New User</h3>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    {% endfor %}
+                    <div class="form-group">
+                        <input type="checkbox" id="show-password" onclick="TogglePassword()"> Show Password
+                    </div>
+                    <button class="btn btn-secondary add-button mx-auto m-2">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% include 'footer.html' %}{% with year=year %}{% endwith %}
+
+<script src="{% static 'webapp/add_user_page/js/add_user_page.js' %}"></script>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
@@ -27,12 +28,13 @@ class Project(models.Model):
         return f"{self.name}"
 
 
+# It's my CustomUser
 class CustomUserManager(BaseUserManager):
     # Do update przy formularu, któryu będzie tworzył usera
     def create_user(self, username, email, password, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
-        email = self.normalize_email(email)
+        email = self.normalize_email(email, )
         user = self.model(username=username.strip(), email=email, password=password, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -50,10 +52,11 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
-# It's my CustomUser
 class CustomUser(AbstractUser):
+    email = models.EmailField(_('email address'), unique=True)
     user_type = models.CharField(max_length=20, choices=(("normal", "Normal"),
-                                                         ("hse_inspector", "HSE Inspector")))
+                                                         ("hse_inspector", "HSE Inspector"),
+                                                         ("project_manager", "Project Manager")))
     user_projects = models.ManyToManyField(Project)
 
     def __str__(self):
