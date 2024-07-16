@@ -17,10 +17,10 @@ class CustomerCompanyEmailAdmin(admin.ModelAdmin):
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('user_type', 'user_projects')}),
+        (None, {'fields': ('user_type', 'user_projects', 'user_company')}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('user_type', 'user_projects')}),
+        (None, {'fields': ('user_type', 'user_projects', 'user_company')}),
     )
 
 

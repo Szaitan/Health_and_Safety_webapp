@@ -1,0 +1,22 @@
+ul {
+    padding-left: 0px;
+}
+
+.add-user-button {
+    width: 20%;
+    height: auto;
+    background-color: #1a1a1a;
+    padding: 18px;
+    margin: 20px 0px;
+}
+
+.add-user-button:hover {
+    color: #00e600;
+}
+
+.table-projects {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+ }
+

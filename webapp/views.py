@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .views_functions import register_send_email
 from webapp.forms import LoginForm, RegisterForm, AddUserForm
-from .models import CustomerCompanyEmails, CustomUser
+from .models import CustomerCompanyEmails, CustomUser, Project
 import datetime
 
 
@@ -25,33 +25,28 @@ class AddUserPage(LoginRequiredMixin, View):
 
     def post(self, request):
         form = AddUserForm(request.POST, user=request.user)
-        print(form.errors)
         if form.is_valid():
-            project = form.cleaned_data["project"]
-            first_name = form.cleaned_data["first_name"]
-            last_name = form.cleaned_data["last_name"]
-            company = form.cleaned_data["company"]
-            email = form.cleaned_data["email"]
-            user_type = form.cleaned_data["user_type"]
-            password = form.cleaned_data["password"]
-            print(project)
-            print(type(project.name))
-            print(first_name)
-            print(last_name)
-            print(company)
-            print(email)
-            print(user_type)
-            print(password)
             # Create the new user
-            user = CustomUser.objects.create_user(username=email.split('@')[0], email=email,
-                                                  password=password, first_name=first_name,
-                                                  last_name=last_name, user_type=user_type)
-            user.user_projects.add(project)
+            user = CustomUser.objects.create_user(username=form.cleaned_data["email"].split('@')[0],
+                                                  email=form.cleaned_data["email"],
+                                                  user_company=form.cleaned_data["company"],
+                                                  password=form.cleaned_data["password"],
+                                                  first_name=form.cleaned_data["first_name"],
+                                                  last_name=form.cleaned_data["last_name"],
+                                                  user_type=form.cleaned_data["user_type"])
+            user.user_projects.add(form.cleaned_data["project"])
             user.save()
             return redirect("add_user_page")
         return render(request, "webapp/add_user_page.html", {
             "form": form,
             "year": get_year(),
+        })
+
+
+class IndexPage(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, "webapp/index_page.html", {
+            "year": get_year()
         })
 
 
@@ -124,8 +119,23 @@ class RegisterPageView(View):
         })
 
 
-class IndexPage(LoginRequiredMixin, View):
+class UsersPage(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if request.user.user_type not in ['hse_inspector', 'project_manager']:
+            return redirect(reverse('intro_page'))
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
-        return render(request, "webapp/index_page.html", {
-            "year": get_year()
+        projects_data = Project.objects.filter(customuser=request.user)
+        print(projects_data[0].name)
+        users = CustomUser.objects.filter(user_projects__in=projects_data).distinct().prefetch_related('user_projects')
+        print(users[0].user_type)
+        return render(request, "webapp/users_page.html", {
+            "title": "- Users Page",
+            "year": get_year(),
+            "users": users,
         })
