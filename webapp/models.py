@@ -54,10 +54,11 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
-    user_type = models.CharField(max_length=20, choices=(("normal", "Normal"),
+    user_type = models.CharField(max_length=20, choices=(("base_user", "Base User"),
                                                          ("hse_inspector", "HSE Inspector"),
                                                          ("project_manager", "Project Manager")))
     user_projects = models.ManyToManyField(Project)
+    user_company = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
