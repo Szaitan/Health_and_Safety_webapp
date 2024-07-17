@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SafeSite Users{% endblock %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'webapp/projects_page/css/projects_page.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'header.html' %}{% with title="Users Page" %}{% endwith %}
+
+<div class="container">
+    <div class="row">
+        <a class="btn btn-secondary add-user-button" role="button" href="{% url 'create_user_page' %}">Create User</a>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Project Name</th>
+                    <th scope="col">Users</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for project in projects_data %}
+            <tr>
+                <td>
+                    {{ project.name }}
+                </td>
+                <td>
+                    <ul>
+                        {% for user_data in project.user.all %}
+                        <li class="table-projects">{{ user_data.first_name }} {{user_data.last_name}}</li>
+                        {% endfor %}
+                        <li class="table-projects"><a href="{% url 'add_user_to_project' project.name %}">Add user</a></li>
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include 'footer.html' %}{% with year=year %}{% endwith %}
+<script src="{% static 'webapp/users_page/js/users_page.js' %}"></script>
+{% endblock %}

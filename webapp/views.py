@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .views_functions import register_send_email
-from webapp.forms import LoginForm, RegisterForm, AddUserForm
+from webapp.forms import LoginForm, RegisterForm, AddUserForm, AddUsertoProject
 from .models import CustomerCompanyEmails, CustomUser, Project
 import datetime
 
@@ -14,17 +14,43 @@ def get_year():
     return datetime.datetime.today().year
 
 
+class AddUserToProject(View):
+    def get(self, request, project_name):
+        form = AddUsertoProject()
+        return render(request, "webapp/add_user_to_project_page.html",
+                      {"project_name": project_name,
+                       "form": form,
+                       })
+
+    def post(self, request, project_name):
+        form = AddUsertoProject(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data["user"])
+            project = Project.objects.get(name=project_name)
+            project.user.add(form.cleaned_data["user"])
+            project.save()
+            return render(request, 'webapp/add_user_to_project_page.html', {
+                "project_name": project_name,
+                'form': form,
+                'message': f"User {form.cleaned_data['user']} has been successfully added to project {project.name}"
+            })
+        return render(request, 'webapp/add_user_to_project_page.html', {
+            "project_name": project_name,
+            "form": form
+        })
+
+
 # Intro Page View
-class AddUserPage(LoginRequiredMixin, View):
+class CreateUserPage(LoginRequiredMixin, View):
     def get(self, request):
-        form = AddUserForm(user=request.user)
-        return render(request, "webapp/add_user_page.html", {
+        form = AddUserForm()
+        return render(request, "webapp/create_user_page.html", {
             "form": form,
             "year": get_year()
         })
 
     def post(self, request):
-        form = AddUserForm(request.POST, user=request.user)
+        form = AddUserForm(request.POST)
         if form.is_valid():
             # Create the new user
             user = CustomUser.objects.create_user(username=form.cleaned_data["email"].split('@')[0],
@@ -34,10 +60,9 @@ class AddUserPage(LoginRequiredMixin, View):
                                                   first_name=form.cleaned_data["first_name"],
                                                   last_name=form.cleaned_data["last_name"],
                                                   user_type=form.cleaned_data["user_type"])
-            user.user_projects.add(form.cleaned_data["project"])
             user.save()
-            return redirect("add_user_page")
-        return render(request, "webapp/add_user_page.html", {
+            return redirect("projects_page")
+        return render(request, "webapp/create_user_page.html", {
             "form": form,
             "year": get_year(),
         })
@@ -119,7 +144,7 @@ class RegisterPageView(View):
         })
 
 
-class UsersPage(LoginRequiredMixin, View):
+class ProjectsPage(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
@@ -130,12 +155,9 @@ class UsersPage(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        projects_data = Project.objects.filter(customuser=request.user)
-        print(projects_data[0].name)
-        users = CustomUser.objects.filter(user_projects__in=projects_data).distinct().prefetch_related('user_projects')
-        print(users[0].user_type)
-        return render(request, "webapp/users_page.html", {
-            "title": "- Users Page",
-            "year": get_year(),
-            "users": users,
+        projects_data = Project.objects.filter(user=request.user)
+        return render(request, "webapp/projects_page.html", {
+            "projects_data": projects_data,
+            "title": "- Projects Page",
+            "year": get_year()
         })

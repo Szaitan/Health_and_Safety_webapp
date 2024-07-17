@@ -5,8 +5,7 @@
     align-items: center;
 }
 
-#id_customer_companies, #id_first_name, #id_last_name,
- #id_company, #id_email{
+#id_user {
     display: block;
     margin: 10px auto;
     padding: 5px;
@@ -18,16 +17,7 @@ label {
     font-size: 1.2em;
 }
 
-.log-div {
-    text-align: center; /* Center objects in the area */
-    width: 60%;
-    height: auto;
-    background-color: #1a1a1a;
-    border-radius: 10%;
-    align-items: center;
-}
-
-.register-button {
+.log-in-button {
     background-color: #1a1a1a;
     height: 10%;
     padding: 18px;
@@ -36,13 +26,22 @@ label {
     text-align: center;
 }
 
-.register-button:hover {
+.log-in-button:hover {
     color: #00e600;
 }
 
+.add_to_proj-div {
+    text-align: center; /* Center objects in the area */
+    width: 60%;
+    height: 50vh;
+    background-color: #1a1a1a;
+    border-radius: 10%;
+    align-items: center;
+}
+
+
 @media screen and (max-width: 700px) {
-    #id_customer_companies, #id_first_name, #id_last_name,
-     #id_company, #id_email {
+    #id_user {
         width: 80%;
     }
 
@@ -50,8 +49,9 @@ label {
     font-size: 1.8em;
     }
 
-    .register-button {
+    .log-in-button {
         padding: 18px;
         width: 40%;
     }
+
 }

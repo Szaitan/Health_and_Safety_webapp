@@ -20,17 +20,9 @@ class CustomerCompany(models.Model):
         return f"{self.name}"
 
 
-class Project(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-    company = models.ForeignKey(CustomerCompany, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.name}"
-
-
 # It's my CustomUser
 class CustomUserManager(BaseUserManager):
-    # Do update przy formularu, któryu będzie tworzył usera
+    # Do update przy formularzu, który będzie tworzył usera
     def create_user(self, username, email, password, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
@@ -57,8 +49,16 @@ class CustomUser(AbstractUser):
     user_type = models.CharField(max_length=20, choices=(("base_user", "Base User"),
                                                          ("hse_inspector", "HSE Inspector"),
                                                          ("project_manager", "Project Manager")))
-    user_projects = models.ManyToManyField(Project)
     user_company = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Project(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    company = models.ForeignKey(CustomerCompany, on_delete=models.CASCADE)
+    user = models.ManyToManyField(CustomUser, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.name}"
