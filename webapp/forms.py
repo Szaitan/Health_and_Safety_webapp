@@ -4,7 +4,7 @@ from .models import CustomerCompany, Project, CustomUser
 from .validators import validate_password, validate_unique_email
 
 
-class AddUserForm(forms.Form):
+class CreateUserForm(forms.Form):
     # project = forms.ModelChoiceField(queryset=Project.objects.none())
     first_name = forms.CharField(min_length=1, max_length=35)
     last_name = forms.CharField(min_length=1, max_length=50)
@@ -44,4 +44,4 @@ class RegisterForm(forms.Form):
     first_name = forms.CharField(min_length=1, max_length=35)
     last_name = forms.CharField(min_length=1, max_length=50)
     company = forms.CharField(min_length=1, max_length=50)
-    email = forms.EmailField(validators=[validators.EmailValidator])
+    email = forms.EmailField(validators=[validators.EmailValidator, validate_unique_email])

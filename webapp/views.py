@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .views_functions import register_send_email
-from webapp.forms import LoginForm, RegisterForm, AddUserForm, AddUsertoProject
+from webapp.forms import LoginForm, RegisterForm, CreateUserForm, AddUsertoProject
 from .models import CustomerCompanyEmails, CustomUser, Project
 import datetime
 
@@ -43,14 +43,14 @@ class AddUserToProject(View):
 # Intro Page View
 class CreateUserPage(LoginRequiredMixin, View):
     def get(self, request):
-        form = AddUserForm()
+        form = CreateUserForm()
         return render(request, "webapp/create_user_page.html", {
             "form": form,
             "year": get_year()
         })
 
     def post(self, request):
-        form = AddUserForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             # Create the new user
             user = CustomUser.objects.create_user(username=form.cleaned_data["email"].split('@')[0],
@@ -89,7 +89,7 @@ class IntroPageView(View):
         })
 
 
-class LoginPageView(View):
+class LoginPage(View):
     def get(self, request):
         return render(request, "webapp/login_page.html", {
             "form": LoginForm(),
@@ -105,13 +105,10 @@ class LoginPageView(View):
             if user is not None:
                 login(request, user)
                 return redirect("index_page")
-            else:
-                print("Nope")
 
             return render(request, "webapp/login_page.html", {
                 "form": LoginForm(),
-                "year": get_year()}
-                          )
+                "year": get_year()})
 
         return redirect(reverse("login_page"))
 
@@ -122,7 +119,7 @@ class LogoutPage(View):
         return redirect("intro_page")
 
 
-class RegisterPageView(View):
+class RegisterPage(View):
     def get(self, request):
         return render(request, "webapp/register_page.html", {
             "form": RegisterForm(),
@@ -133,15 +130,20 @@ class RegisterPageView(View):
         form = RegisterForm(request.POST)
         if form.is_valid():
             clean_data = form.cleaned_data
-            customer_companies_emails_query_list = [email for email in CustomerCompanyEmails.objects.filter(
-                customercompany__name=clean_data["customer_companies"].name).values_list('email', flat=True)]
-            register_send_email(clean_data["customer_companies"].name, clean_data["name"], clean_data["last_name"],
-                                clean_data["company"], clean_data["email"], customer_companies_emails_query_list)
+
+            # customer_companies_emails_query_list = [email for email in CustomerCompanyEmails.objects.filter(
+            #     customercompany__name=clean_data["customer_companies"].name).values_list('email', flat=True)]
+            # register_send_email(clean_data["customer_companies"].name, clean_data["first_name"], clean_data["last_name"],
+            #                     clean_data["company"], clean_data["email"], customer_companies_emails_query_list)
+
+            return render(request, 'webapp/register_page.html', {
+                'form': form,
+                'message': f"Your registration was successfully sent to verification."
+            })
 
         return render(request, "webapp/register_page.html", {
-            "form": RegisterForm(),
-            "year": get_year()
-        })
+            "form": form,
+            "year": get_year()})
 
 
 class ProjectsPage(LoginRequiredMixin, View):

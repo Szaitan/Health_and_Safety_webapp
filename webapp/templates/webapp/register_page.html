@@ -19,6 +19,11 @@
                         {{ field }}
                         {{ field.errors }}
                     {% endfor %}
+                    {% if message %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endif %}
                     <button class="btn btn-secondary register-button mx-auto m-2">Send</button>
                 </form>
             </div>

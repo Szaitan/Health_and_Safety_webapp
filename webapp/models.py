@@ -58,7 +58,7 @@ class CustomUser(AbstractUser):
 class Project(models.Model):
     name = models.CharField(max_length=30, unique=True)
     company = models.ForeignKey(CustomerCompany, on_delete=models.CASCADE)
-    user = models.ManyToManyField(CustomUser, blank=True, null=True)
+    user = models.ManyToManyField(CustomUser, blank=True)
 
     def __str__(self):
         return f"{self.name}"
