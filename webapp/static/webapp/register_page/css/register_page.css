@@ -26,12 +26,20 @@ label {
 }
 
 .log-div {
+    align-items: center;
     text-align: center; /* Center objects in the area */
     width: 60%;
     height: auto;
     background-color: #1a1a1a;
     border-radius: 10%;
-    align-items: center;
+
+    border-radius: 50px; /*1*/
+    border: 10px solid transparent; /*2*/
+    background: linear-gradient(45deg,#b3ffda, #00e600) border-box; /*3*/
+    -webkit-mask: /*4*/
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+    -webkit-mask-composite: x
 }
 
 .register-button {
