@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}SafeSite Users{% endblock %}
+{% block title %}SafeSite Projects{% endblock %}
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'webapp/projects_page/css/projects_page.css' %}">
 {% endblock %}
@@ -28,7 +28,19 @@
                 <td>
                     <ul>
                         {% for user_data in project.user.all %}
-                        <li class="table-projects">{{ user_data.first_name }} {{user_data.last_name}}</li>
+                        <li id="user-{{ user_data.id }}" class="table-projects">{{ user_data.first_name }} {{ user_data.last_name }}
+                            <a href="#" class="remove-user" data-user-id="{{ user_data.id }}"
+                               data-user-fullname="{{ user_data.first_name}} {{user_data.last_name }}"
+                               data-project-name="{{ project.name }}"
+                               data-url="{% url 'remove_user_from_project' %}" title="Remove">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-x remove-user-icon" viewBox="0 0 16 16">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1
+                                    .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8
+                                    8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                </svg>
+                            </a>
+                        </li>
                         {% endfor %}
                         <li class="table-projects"><a href="{% url 'add_user_to_project' project.name %}">Add user</a></li>
                     </ul>
@@ -39,7 +51,40 @@
         </table>
     </div>
 </div>
-
 {% include 'footer.html' %}{% with year=year %}{% endwith %}
-<script src="{% static 'webapp/users_page/js/users_page.js' %}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.remove-user').on('click', function(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to remove this user from this project?")) {
+                const userId = $(this).data('user-id');
+                const projectName = $(this).data('project-name');
+                const userFullName = $(this).data('user-fullname')
+                const csrfToken = '{{ csrf_token }}';
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "remove_user_from_project" %}',
+                    data: {
+                        'user_id': userId,
+                        'project_name': projectName,
+                        'csrfmiddlewaretoken': csrfToken
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#user-' + userId).remove();
+                            alert(`User: ${userFullName} has been removed.`);
+                        }
+                    },
+                    error: function(response) {
+                        alert('An error occurred while trying to remove the user.');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 {% endblock %}

@@ -1,11 +1,12 @@
-from django.shortcuts import render, reverse, redirect
-from django.views import View
+import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render, reverse, redirect
+from django.views import View
 from .views_functions import register_send_email
 from webapp.forms import LoginForm, RegisterForm, CreateUserForm, AddUsertoProject
 from .models import CustomerCompanyEmails, CustomUser, Project
-import datetime
 
 
 # Create your views here.
@@ -14,7 +15,7 @@ def get_year():
     return datetime.datetime.today().year
 
 
-class AddUserToProject(View):
+class AddUserToProject(LoginRequiredMixin, View):
     def get(self, request, project_name):
         form = AddUsertoProject()
         return render(request, "webapp/add_user_to_project_page.html",
@@ -163,3 +164,15 @@ class ProjectsPage(LoginRequiredMixin, View):
             "title": "- Projects Page",
             "year": get_year()
         })
+
+
+class RemoveUserFromProjects(LoginRequiredMixin, View):
+    def post(self, request):
+        project_name = request.POST.get("project_name")
+        user_id = request.POST.get("user_id")
+
+        project = get_object_or_404(Project, name=project_name)
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        project.user.remove(user)
+        return JsonResponse({'success': True})

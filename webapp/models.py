@@ -22,7 +22,6 @@ class CustomerCompany(models.Model):
 
 # It's my CustomUser
 class CustomUserManager(BaseUserManager):
-    # Do update przy formularzu, który będzie tworzył usera
     def create_user(self, username, email, password, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')

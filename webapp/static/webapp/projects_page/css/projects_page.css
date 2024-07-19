@@ -14,9 +14,19 @@ ul {
     color: #00e600;
 }
 
+.remove-user {
+    display: none;
+    color: red;
+}
+
+li:hover .remove-user {
+    display: inline;
+}
+
 .table-projects {
   list-style-type: none;
   margin: 0;
   padding: 0;
+      width: 20vh;
  }
 
