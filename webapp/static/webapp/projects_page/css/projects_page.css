@@ -2,18 +2,6 @@ ul {
     padding-left: 0px;
 }
 
-.add-user-button {
-    width: 20%;
-    height: auto;
-    background-color: #1a1a1a;
-    padding: 18px;
-    margin: 20px 0px;
-}
-
-.add-user-button:hover {
-    color: #00e600;
-}
-
 .remove-user {
     display: none;
     color: red;
@@ -21,6 +9,10 @@ ul {
 
 li:hover .remove-user {
     display: inline;
+}
+
+.table-div {
+    margin-top: 20px;
 }
 
 .table-projects {

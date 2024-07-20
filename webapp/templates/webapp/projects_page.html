@@ -8,11 +8,12 @@
 
 {% block content %}
 {% include 'header.html' %}{% with title="Users Page" %}{% endwith %}
+<meta name="csrf-token" content="{{ csrf_token }}">
 
 <div class="container">
     <div class="row">
-        <a class="btn btn-secondary add-user-button" role="button" href="{% url 'create_user_page' %}">Create User</a>
-        <table class="table table-dark table-striped">
+        <div class="table-div">
+            <table class="table table-dark table-striped">
             <thead>
                 <tr>
                     <th scope="col">Project Name</th>
@@ -49,42 +50,12 @@
             {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 {% include 'footer.html' %}{% with year=year %}{% endwith %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.remove-user').on('click', function(event) {
-            event.preventDefault();
-            if (confirm("Are you sure you want to remove this user from this project?")) {
-                const userId = $(this).data('user-id');
-                const projectName = $(this).data('project-name');
-                const userFullName = $(this).data('user-fullname')
-                const csrfToken = '{{ csrf_token }}';
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url "remove_user_from_project" %}',
-                    data: {
-                        'user_id': userId,
-                        'project_name': projectName,
-                        'csrfmiddlewaretoken': csrfToken
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#user-' + userId).remove();
-                            alert(`User: ${userFullName} has been removed.`);
-                        }
-                    },
-                    error: function(response) {
-                        alert('An error occurred while trying to remove the user.');
-                    }
-                });
-            }
-        });
-    });
-</script>
+<script src="{% static 'webapp/projects_page/js/projects_page.js' %}"></script>
 
 {% endblock %}
