@@ -2,23 +2,34 @@ from django import forms
 from django.core import validators
 from .models import CustomerCompany, Project, CustomUser
 from .validators import validate_password, validate_unique_email
+from .model_functions import generate_password
 
 
 class CreateUserForm(forms.Form):
-    # project = forms.ModelChoiceField(queryset=Project.objects.none())
+    # first_name = forms.CharField(min_length=1, max_length=35)
+    # last_name = forms.CharField(min_length=1, max_length=50)
+    # company = forms.CharField(min_length=1, max_length=50)
+    # email = forms.EmailField(validators=[validators.EmailValidator, validate_unique_email])
+    # user_type = forms.ChoiceField(choices=(("base_user", "Base User"), ("hse_inspector", "HSE Inspector"),
+    #                                        ("project_manager", "Project Manager")))
+    # password = forms.CharField(widget=forms.PasswordInput, validators=[validate_password])
+    #
+    # def __init__(self, *args, **kwargs):
+    #     super(CreateUserForm, self).__init__(*args, **kwargs)
+    #     self.fields['password'].initial = generate_password()
+
     first_name = forms.CharField(min_length=1, max_length=35)
     last_name = forms.CharField(min_length=1, max_length=50)
     company = forms.CharField(min_length=1, max_length=50)
-    email = forms.EmailField(validators=[validators.EmailValidator, validate_unique_email])
+    email = forms.EmailField(validators=[validate_unique_email])
     user_type = forms.ChoiceField(choices=(("base_user", "Base User"), ("hse_inspector", "HSE Inspector"),
                                            ("project_manager", "Project Manager")))
-    password = forms.CharField(widget=forms.PasswordInput, validators=[validate_password])
+    password = forms.CharField(validators=[validate_password])
 
-    # def __init__(self, *args, **kwargs):
-    #     user = kwargs.pop('user', None)
-    #     super(AddUserForm, self).__init__(*args, **kwargs)
-    #     if user:
-    #         self.fields['project'].queryset = Project.objects.filter(customuser=user)
+    def __init__(self, *args, **kwargs):
+        print(generate_password())
+        super(CreateUserForm, self).__init__(*args, **kwargs)
+        self.fields['password'].initial = generate_password()
 
 
 class AddUsertoProject(forms.Form):

@@ -2,7 +2,7 @@
 // 1) CSRF Token has to be added as metatagg in html: <meta name="csrf-token" content="{{ csrf_token }}">
 // and in .js file const csrfToken = $('meta[name="csrf-token"]').attr('content');
 // 2) We have to pass url by adding in html: data-url="{% url 'remove_user_from_project' %}" and
-// in .js create of variable const url = $(this).data('url');
+// in .js create of variable const url = $(this).data('url') in anchor tah;
 
 $(document).ready(function() {
     $('.remove-user').on('click', function(event) {

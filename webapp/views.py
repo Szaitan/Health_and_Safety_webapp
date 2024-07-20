@@ -85,6 +85,7 @@ class IntroPageView(View):
         # Test with creation of superuser
         # CustomUser.objects.create_user(username="test2", email="", password="",
         #                                first_name="Dupa", last_name="Dupp", user_type="normal")
+
         return render(request, "webapp/intro_page.html", {
             "year": get_year()
         })

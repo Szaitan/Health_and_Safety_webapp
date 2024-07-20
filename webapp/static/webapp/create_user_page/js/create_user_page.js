@@ -9,3 +9,11 @@ function TogglePassword() {
         }
     });
 }
+
+// Changing type of chafilerd password for password type
+document.addEventListener("DOMContentLoaded", function() {
+    var passwordField = document.getElementById("id_password");
+    if (passwordField) {
+        passwordField.setAttribute("type", "password");
+    }
+});
