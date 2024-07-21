@@ -12,3 +12,4 @@ urlpatterns = [
     path("register_page", views.RegisterPage.as_view(), name="register_page"),
     path("remove_user_from_project", views.RemoveUserFromProjects.as_view(), name="remove_user_from_project")
 ]
+

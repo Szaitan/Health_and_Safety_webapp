@@ -16,6 +16,15 @@ def get_year():
 
 
 class AddUserToProject(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if request.user.user_type not in ['hse_inspector', 'project_manager']:
+            return redirect(reverse('intro_page'))
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, project_name):
         form = AddUsertoProject()
         return render(request, "webapp/add_user_to_project_page.html",
@@ -43,6 +52,15 @@ class AddUserToProject(LoginRequiredMixin, View):
 
 # Intro Page View
 class CreateUserPage(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if request.user.user_type not in ['hse_inspector', 'project_manager']:
+            return redirect(reverse('intro_page'))
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         form = CreateUserForm()
         return render(request, "webapp/create_user_page.html", {
