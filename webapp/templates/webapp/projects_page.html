@@ -16,7 +16,7 @@
             <table class="table table-dark table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Project Name</th>
+                    <th scope="col">Project Title</th>
                     <th scope="col">Users</th>
                 </tr>
             </thead>
@@ -29,7 +29,7 @@
                 <td>
                     <ul>
                         {% for user_data in project.user.all %}
-                        <li id="user-{{ user_data.id }}" class="table-projects">{{ user_data.first_name }} {{ user_data.last_name }}
+                        <li id="user-{{ user_data.id }}" class="table-projects projects-li">{{ user_data.first_name }} {{ user_data.last_name }}
                             <a href="#" class="remove-user" data-user-id="{{ user_data.id }}"
                                data-user-fullname="{{ user_data.first_name}} {{user_data.last_name }}"
                                data-project-name="{{ project.name }}"

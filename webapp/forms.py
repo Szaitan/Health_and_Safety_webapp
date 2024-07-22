@@ -5,19 +5,15 @@ from .validators import validate_password, validate_unique_email
 from .model_functions import generate_password
 
 
-class CreateUserForm(forms.Form):
-    # first_name = forms.CharField(min_length=1, max_length=35)
-    # last_name = forms.CharField(min_length=1, max_length=50)
-    # company = forms.CharField(min_length=1, max_length=50)
-    # email = forms.EmailField(validators=[validators.EmailValidator, validate_unique_email])
-    # user_type = forms.ChoiceField(choices=(("base_user", "Base User"), ("hse_inspector", "HSE Inspector"),
-    #                                        ("project_manager", "Project Manager")))
-    # password = forms.CharField(widget=forms.PasswordInput, validators=[validate_password])
-    #
-    # def __init__(self, *args, **kwargs):
-    #     super(CreateUserForm, self).__init__(*args, **kwargs)
-    #     self.fields['password'].initial = generate_password()
+class AddUsertoProject(forms.Form):
+    user = forms.ModelChoiceField(queryset=CustomUser.objects.none())
 
+    def __init__(self, *args, **kwargs):
+        super(AddUsertoProject, self).__init__(*args, **kwargs)
+        self.fields['user'].queryset = CustomUser.objects.all()
+
+
+class CreateUserForm(forms.Form):
     first_name = forms.CharField(min_length=1, max_length=35)
     last_name = forms.CharField(min_length=1, max_length=50)
     company = forms.CharField(min_length=1, max_length=50)
@@ -27,17 +23,29 @@ class CreateUserForm(forms.Form):
     password = forms.CharField(validators=[validate_password])
 
     def __init__(self, *args, **kwargs):
-        print(generate_password())
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.fields['password'].initial = generate_password()
 
 
-class AddUsertoProject(forms.Form):
-    user = forms.ModelChoiceField(queryset=CustomUser.objects.none())
+class EditUserForm(forms.Form):
+    first_name = forms.CharField(min_length=1, max_length=35)
+    last_name = forms.CharField(min_length=1, max_length=50)
+    company = forms.CharField(min_length=1, max_length=50)
+    email = forms.EmailField()
+    user_type = forms.ChoiceField(choices=(("base_user", "Base User"), ("hse_inspector", "HSE Inspector"),
+                                           ("project_manager", "Project Manager")))
+    password = forms.CharField(validators=[validate_password], required=False, help_text="In case, change password.")
 
     def __init__(self, *args, **kwargs):
-        super(AddUsertoProject, self).__init__(*args, **kwargs)
-        self.fields['user'].queryset = CustomUser.objects.all()
+        #  We need to catch argument that is passed to form, or we will have an error
+        self.current_user = kwargs.pop('current_user', None)
+        super(EditUserForm, self).__init__(*args, **kwargs)
+        self.fields['password'].help_text = '<span class="help-text">%s</span>' % self.fields['password'].help_text
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        validate_unique_email(email, self.current_user)
+        return email
 
 
 class LoginForm(forms.Form):

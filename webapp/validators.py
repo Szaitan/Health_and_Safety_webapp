@@ -18,6 +18,7 @@ def validate_password(value):
         raise ValidationError("Password must contain at least one special character.")
 
 
-def validate_unique_email(value):
-    if CustomUser.objects.filter(email=value).exists():
+def validate_unique_email(value, current_user=None):
+    if CustomUser.objects.filter(email=value).exclude(id=current_user.id if current_user else None).exists():
         raise ValidationError("Email is already in use.")
+

@@ -7,6 +7,10 @@ ul {
     color: red;
 }
 
+.projects-li {
+    width: 20vw;
+}
+
 li:hover .remove-user {
     display: inline;
 }
@@ -19,6 +23,5 @@ li:hover .remove-user {
   list-style-type: none;
   margin: 0;
   padding: 0;
-      width: 20vh;
  }
 

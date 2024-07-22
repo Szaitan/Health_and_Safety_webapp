@@ -1,11 +1,12 @@
 import datetime
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, reverse, redirect
 from django.views import View
 from .views_functions import register_send_email
-from webapp.forms import LoginForm, RegisterForm, CreateUserForm, AddUsertoProject
+from webapp.forms import LoginForm, RegisterForm, CreateUserForm, AddUsertoProject, EditUserForm
 from .models import CustomerCompanyEmails, CustomUser, Project
 
 
@@ -84,6 +85,43 @@ class CreateUserPage(LoginRequiredMixin, View):
         return render(request, "webapp/create_user_page.html", {
             "form": form,
             "year": get_year(),
+        })
+
+
+class EditUserPage(LoginRequiredMixin, View):
+    def get(self, request):
+        user = get_object_or_404(CustomUser, id=request.user.id)
+        form = EditUserForm(initial={
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'company': user.user_company,
+            'user_type': user.user_type,
+            'email': user.email,
+        }, current_user=request.user)
+        return render(request, "webapp/edit_user_page.html", {
+            "form": form,
+            "year": get_year()
+        })
+
+    def post(self, request):
+        user = get_object_or_404(CustomUser, id=request.user.id)
+        form = EditUserForm(request.POST, current_user=request.user)
+        if form.is_valid():
+            form_clean_data = form.cleaned_data
+            # Updating user data
+            user.first_name = form_clean_data["first_name"]
+            user.last_name = form_clean_data["last_name"]
+            user.user_company = form_clean_data["company"]
+            user.email = form_clean_data["email"]
+            if not form_clean_data["password"] == "":
+                user.password = form_clean_data["password"]
+            user.save()
+
+            messages.success(request, "User updated successfully")
+            return redirect('index_page')
+        return render(request, "webapp/edit_user_page.html", {
+            "form": form,
+            "year": get_year()
         })
 
 
