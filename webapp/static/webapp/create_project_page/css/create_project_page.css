@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    min-height: 83vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-button {
+    background-color: #1a1a1a;
+    height: 10%;
+    padding: 18px;
+    width: 40%;
+    display: block;
+    text-align: center;
+}
+
+
+.create-button:hover {
+    color: #00e600;
+}
+
+.create_proj-div {
+    text-align: center; /* Center objects in the area */
+    width: 60%;
+    height: 50vh;
+    background-color: #1a1a1a;
+    border-radius: 10%;
+    align-items: center;
+}
+
+.errorlist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: red;
+}
+
+#id_name {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+    width: 40%;
+    text-font: 40px;
+}
+
+label {
+    font-size: 1.2em;
+}
+
+@media screen and (max-width: 700px) {
+    #id_name {
+        width: 80%;
+    }
+
+    label {
+    font-size: 1.8em;
+    }
+
+    .create-button {
+        padding: 18px;
+        width: 40%;
+    }
+
+}
