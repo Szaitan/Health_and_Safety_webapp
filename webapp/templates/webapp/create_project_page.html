@@ -1,20 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}SafeSite Add user to Project {% endblock %}
+{% block title %}SafeSite Create Project{% endblock %}
 {% block css_files %}
-    <link rel="stylesheet"
-          href="{% static 'webapp/add_user_to_project_page/css/add_user_to_project_page.css' %}"
-    >
+    <link rel="stylesheet" href="{% static 'webapp/create_project_page/css/create_project_page.css' %}">
 {% endblock %}
 
 {% block content %}
     {% include 'header.html' %}
     <div class="container">
-        <div class="row add_to_proj-div">
+        <div class="row create_proj-div">
             <div class="col-lg-12">
-                <form action="{% url 'add_user_to_project' project_name %}" method="POST">
-                    <h3 class="m-3">Add User To Project: {{ project_name }}</h3>
+                <form action="{% url 'create_project_page' %}" method="POST">
+                    <h3 class="m-3">Create Company Project</h3>
                     {% if message %}
                         <div class="alert alert-success" role="alert">
                             {{ message }}
@@ -26,13 +24,11 @@
                         {{ field }}
                         {{ field.errors }}
                     {% endfor %}
-                    <button class="btn btn-secondary log-in-button mx-auto m-2">Add</button>
+                    <button class="btn btn-secondary create-button mx-auto m-2">Add</button>
                 </form>
             </div>
         </div>
     </div>
-{% include 'footer.html' %}{% with year=year %}{% endwith %}
-
-<script src="{% static 'webapp/login_page/js/login_page.js' %}"></script>
+    {% include 'footer.html' %}{% with year=year %}{% endwith %}
 {% endblock %}
 

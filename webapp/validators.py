@@ -2,7 +2,7 @@
 
 import re
 from django.core.exceptions import ValidationError
-from .models import CustomUser
+from .models import CustomUser, Project
 
 
 def validate_password(value):
@@ -22,3 +22,7 @@ def validate_unique_email(value, current_user=None):
     if CustomUser.objects.filter(email=value).exclude(id=current_user.id if current_user else None).exists():
         raise ValidationError("Email is already in use.")
 
+
+def validate_unique_project_name(value):
+    if Project.objects.filter(name=value):
+        raise ValidationError("Project name is already in use. Chose another one.")

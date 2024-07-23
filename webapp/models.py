@@ -14,6 +14,7 @@ class CustomerCompanyEmails(models.Model):
 
 class CustomerCompany(models.Model):
     name = models.CharField(max_length=75)
+    num_of_projects = models.IntegerField()
     general_emails = models.ManyToManyField(CustomerCompanyEmails)
 
     def __str__(self):
@@ -45,9 +46,10 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
-    user_type = models.CharField(max_length=20, choices=(("base_user", "Base User"),
+    user_type = models.CharField(max_length=40, choices=(("base_user", "Base User"),
                                                          ("hse_inspector", "HSE Inspector"),
-                                                         ("project_manager", "Project Manager")))
+                                                         ("project_manager", "Project Manager"),
+                                                         ("company_representative", "Company Representative")))
     user_company = models.CharField(max_length=50)
 
     def __str__(self):

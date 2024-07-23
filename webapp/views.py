@@ -3,11 +3,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render, reverse, redirect
+from django.shortcuts import get_object_or_404,redirect, render, reverse
 from django.views import View
 from .views_functions import register_send_email
-from webapp.forms import LoginForm, RegisterForm, CreateUserForm, AddUsertoProject, EditUserForm
-from .models import CustomerCompanyEmails, CustomUser, Project
+from webapp.forms import AddUsertoProject, CreateProjectForm, CreateUserForm, EditUserForm, LoginForm, RegisterForm
+from .models import CustomerCompany, CustomUser, Project
 
 
 # Create your views here.
@@ -21,7 +21,7 @@ class AddUserToProject(LoginRequiredMixin, View):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
-        if request.user.user_type not in ['hse_inspector', 'project_manager']:
+        if request.user.user_type not in ['hse_inspector', 'project_manager', 'company_representative']:
             return redirect(reverse('intro_page'))
 
         return super().dispatch(request, *args, **kwargs)
@@ -36,7 +36,6 @@ class AddUserToProject(LoginRequiredMixin, View):
     def post(self, request, project_name):
         form = AddUsertoProject(request.POST)
         if form.is_valid():
-            print(form.cleaned_data["user"])
             project = Project.objects.get(name=project_name)
             project.user.add(form.cleaned_data["user"])
             project.save()
@@ -51,13 +50,49 @@ class AddUserToProject(LoginRequiredMixin, View):
         })
 
 
+class CreateProjectPage(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if request.user.user_type not in ['company_representative']:
+            return redirect(reverse('intro_page'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, reqeust):
+        form = CreateProjectForm()
+        return render(reqeust, "webapp/create_project_page.html", {
+            "form": form,
+            "year": get_year()
+        })
+
+    def post(self, request):
+        form = CreateProjectForm(request.POST)
+        if form.is_valid():
+            form_clean_data = form.cleaned_data
+            project_name = form_clean_data["name"]
+            user_company = CustomerCompany.objects.get(name=request.user.user_company)
+            project = Project.objects.create(name=project_name, company=user_company)
+            project.user.set([request.user])
+            return render(request, "webapp/create_project_page.html", {
+                "form": form,
+                "year": get_year(),
+                "message": f"Project: {project_name} created successfully"
+            })
+        return render(request, "webapp/create_project_page.html", {
+            "form": form,
+            "year": get_year()
+        })
+
+
 # Intro Page View
 class CreateUserPage(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
-        if request.user.user_type not in ['hse_inspector', 'project_manager']:
+        if request.user.user_type not in ['hse_inspector', 'project_manager', 'company_representative']:
             return redirect(reverse('intro_page'))
 
         return super().dispatch(request, *args, **kwargs)
@@ -95,8 +130,7 @@ class EditUserPage(LoginRequiredMixin, View):
             'first_name': user.first_name,
             'last_name': user.last_name,
             'company': user.user_company,
-            'user_type': user.user_type,
-            'email': user.email,
+            'email': user.email
         }, current_user=request.user)
         return render(request, "webapp/edit_user_page.html", {
             "form": form,
@@ -209,7 +243,7 @@ class ProjectsPage(LoginRequiredMixin, View):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
-        if request.user.user_type not in ['hse_inspector', 'project_manager']:
+        if request.user.user_type not in ['hse_inspector', 'project_manager', 'company_representative']:
             return redirect(reverse('intro_page'))
 
         return super().dispatch(request, *args, **kwargs)
