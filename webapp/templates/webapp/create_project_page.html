@@ -30,5 +30,11 @@
         </div>
     </div>
     {% include 'footer.html' %}{% with year=year %}{% endwith %}
+    <script src="{% static 'webapp/create_project_page/js/create_project_page.js' %}"></script>
+    {% if redirect_url %}
+        <script>
+            redirectAfterDelay("{{ redirect_url }}", 5000);
+        </script>
+    {% endif %}
 {% endblock %}
 

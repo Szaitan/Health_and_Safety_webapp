@@ -60,16 +60,27 @@ class CreateProjectPage(LoginRequiredMixin, View):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def get(self, reqeust):
+    def get(self, request):
         form = CreateProjectForm()
-        return render(reqeust, "webapp/create_project_page.html", {
+        return render(request, "webapp/create_project_page.html", {
             "form": form,
             "year": get_year()
         })
 
     def post(self, request):
         form = CreateProjectForm(request.POST)
+
         if form.is_valid():
+            # Checking number of projects
+            user_company = CustomerCompany.objects.get(name=request.user.user_company)
+            current_num_projects = Project.objects.filter(company=user_company)
+            if user_company.num_of_projects == current_num_projects.count():
+                return render(request, "webapp/create_project_page.html", {
+                    "form": form,
+                    "year": get_year(),
+                    "message": f"Total number of projects reach maximum. Please buy more project slots."
+                })
+
             form_clean_data = form.cleaned_data
             project_name = form_clean_data["name"]
             user_company = CustomerCompany.objects.get(name=request.user.user_company)
@@ -78,7 +89,8 @@ class CreateProjectPage(LoginRequiredMixin, View):
             return render(request, "webapp/create_project_page.html", {
                 "form": form,
                 "year": get_year(),
-                "message": f"Project: {project_name} created successfully"
+                "message": f"Project: {project_name} created successfully",
+                "redirect_url": reverse('projects_page')
             })
         return render(request, "webapp/create_project_page.html", {
             "form": form,
@@ -168,10 +180,6 @@ class IndexPage(LoginRequiredMixin, View):
 
 class IntroPageView(View):
     def get(self, request):
-        # Test to check about user
-        # if request.user.is_authenticated:
-        #     print(request.user.user_projects.all()[0].name)
-
         # Test with creation of superuser
         # CustomUser.objects.create_user(username="test2", email="", password="",
         #                                first_name="Dupa", last_name="Dupp", user_type="normal")
