@@ -81,6 +81,7 @@ class CreateProjectPage(LoginRequiredMixin, View):
                     "message": f"Total number of projects reach maximum. Please buy more project slots."
                 })
 
+            # Creation of project
             form_clean_data = form.cleaned_data
             project_name = form_clean_data["name"]
             user_company = CustomerCompany.objects.get(name=request.user.user_company)
