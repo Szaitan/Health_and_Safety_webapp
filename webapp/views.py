@@ -90,8 +90,7 @@ class CreateProjectPage(LoginRequiredMixin, View):
             return render(request, "webapp/create_project_page.html", {
                 "form": form,
                 "year": get_year(),
-                "message": f"Project: {project_name} created successfully",
-                "redirect_url": reverse('projects_page')
+                "message": f"Project: {project_name} created successfully"
             })
         return render(request, "webapp/create_project_page.html", {
             "form": form,
