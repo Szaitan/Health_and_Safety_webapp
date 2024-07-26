@@ -14,10 +14,13 @@
                 <form action="{% url 'create_project_page' %}" method="POST">
                     <h3 class="m-3">Create Company Project</h3>
                     {% if message %}
-                        <div class="alert alert-success" role="alert">
-                            {{ message }}
-                            <p>You will be transferred to projects page in:</p><div id="countdown"></div>
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    <div class="alert alert-success" role="alert">
+                        <p>You will be transferred to projects page in:</p><div id="countdown"></div>
+                        <script src="{% static 'redirection_to_project_page.js' %}"></script>
+                    </div>
                     {% endif %}
 
                     {% csrf_token %}
@@ -32,26 +35,5 @@
         </div>
     </div>
     {% include 'footer.html' %}{% with year=year %}{% endwith %}
-    <script src="{% static 'webapp/create_project_page/js/create_project_page.js' %}"></script>
-    <script>
-        // Set the countdown starting time in seconds
-        var countdownTime = 5;
-
-        // Update the count down every 1 second
-        var countdownFunction = setInterval(function() {
-
-            // Display the countdown time
-            document.getElementById("countdown").innerHTML = countdownTime + "s";
-
-            // Decrease the countdown time by 1
-            countdownTime--;
-
-            // If the countdown is over, write some text
-            if (countdownTime < 0) {
-                clearInterval(countdownFunction);
-                window.location.href = "/projects_page";
-            }
-        }, 1000);
-    </script>
 {% endblock %}
 
