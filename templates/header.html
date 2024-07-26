@@ -19,7 +19,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'projects_page' %}">Projects</a></li>
                             <li><a class="dropdown-item" href="{% url 'create_user_page' %}">Create User</a></li>
-                            {% if user.is_authenticated %}<li><a class="dropdown-item" href="{% url 'create_project_page' %}">Crete Project</a></li>{% endif %}
+                            {% if user.is_authenticated and user.user_type == "company_representative" %}<li><a class="dropdown-item" href="{% url 'create_project_page' %}">Crete Project</a></li>{% endif %}
                         </ul>
                     </li>
                 {% endif %}
