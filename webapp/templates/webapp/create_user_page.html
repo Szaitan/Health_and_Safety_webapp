@@ -13,6 +13,13 @@
             <div class="col-lg-12">
                 <form action="{% url 'create_user_page' %}" method="POST">
                     <h3 class="m-3">Create New User</h3>
+                    {% if message %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                            <p>You will be transferred to projects page in:</p><div id="countdown"></div>
+                        </div>
+                    {% endif %}
+
                     {% csrf_token %}
                     {% for field in form %}
                         {{ field.label_tag }}
@@ -30,4 +37,24 @@
 {% include 'footer.html' %}{% with year=year %}{% endwith %}
 
 <script src="{% static 'webapp/create_user_page/js/create_user_page.js' %}"></script>
+<script>
+    // Set the countdown starting time in seconds
+    var countdownTime = 5;
+
+    // Update the count down every 1 second
+    var countdownFunction = setInterval(function() {
+
+        // Display the countdown time
+        document.getElementById("countdown").innerHTML = countdownTime + "s";
+
+        // Decrease the countdown time by 1
+        countdownTime--;
+
+        // If the countdown is over, write some text
+        if (countdownTime < 0) {
+            clearInterval(countdownFunction);
+            window.location.href = "/projects_page";
+        }
+    }, 1000);
+</script>
 {% endblock %}

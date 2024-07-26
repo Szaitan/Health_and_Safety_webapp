@@ -129,7 +129,11 @@ class CreateUserPage(LoginRequiredMixin, View):
                                                   last_name=form.cleaned_data["last_name"],
                                                   user_type=form.cleaned_data["user_type"])
             user.save()
-            return redirect("projects_page")
+            return render(request, "webapp/create_user_page.html", {
+                "form": form,
+                "year": get_year(),
+                "message": f"User {form.cleaned_data["first_name"]} {form.cleaned_data["last_name"]} "
+                           f"created successfully."})
         return render(request, "webapp/create_user_page.html", {
             "form": form,
             "year": get_year(),
