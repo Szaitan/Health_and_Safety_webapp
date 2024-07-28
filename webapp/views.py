@@ -98,7 +98,6 @@ class CreateProjectPage(LoginRequiredMixin, View):
         })
 
 
-# Intro Page View
 class CreateUserPage(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -122,7 +121,7 @@ class CreateUserPage(LoginRequiredMixin, View):
             # Create the new user
             user = CustomUser.objects.create_user(username=form.cleaned_data["email"].split('@')[0],
                                                   email=form.cleaned_data["email"],
-                                                  user_company=form.cleaned_data["company"],
+                                                  user_company=form.cleaned_data["company"].lower(),
                                                   password=form.cleaned_data["password"],
                                                   first_name=form.cleaned_data["first_name"],
                                                   last_name=form.cleaned_data["last_name"],
@@ -145,7 +144,7 @@ class EditUserPage(LoginRequiredMixin, View):
         form = EditUserForm(initial={
             'first_name': user.first_name,
             'last_name': user.last_name,
-            'company': user.user_company,
+            'company': user.user_company.capitalize(),
             'email': user.email
         }, current_user=request.user)
         return render(request, "webapp/edit_user_page.html", {
@@ -161,7 +160,7 @@ class EditUserPage(LoginRequiredMixin, View):
             # Updating user data
             user.first_name = form_clean_data["first_name"]
             user.last_name = form_clean_data["last_name"]
-            user.user_company = form_clean_data["company"]
+            user.user_company = form_clean_data["company"].lower()
             user.email = form_clean_data["email"]
             if not form_clean_data["password"] == "":
                 user.password = form_clean_data["password"]
@@ -184,10 +183,6 @@ class IndexPage(LoginRequiredMixin, View):
 
 class IntroPageView(View):
     def get(self, request):
-        # Test with creation of superuser
-        # CustomUser.objects.create_user(username="test2", email="", password="",
-        #                                first_name="Dupa", last_name="Dupp", user_type="normal")
-
         return render(request, "webapp/intro_page.html", {
             "year": get_year()
         })
@@ -205,7 +200,6 @@ class LoginPage(View):
         if form.is_valid():
             clean_data = form.cleaned_data
             user = authenticate(username=clean_data["email"], password=clean_data["password"])
-            print(clean_data["email"], clean_data["password"])
             if user is not None:
                 login(request, user)
                 return redirect("index_page")
@@ -221,6 +215,42 @@ class LogoutPage(View):
     def get(self, request):
         logout(request)
         return redirect("intro_page")
+
+
+class ProjectsPage(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if request.user.user_type not in ['hse_inspector', 'project_manager', 'company_representative']:
+            return redirect(reverse('intro_page'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        projects_data = Project.objects.filter(user=request.user).order_by("name")
+
+        # We are adding new attribute 'users_sorted' which will allow to display them in order.
+        for project in projects_data:
+            project.users_sorted = project.user.all().order_by('first_name', 'last_name')
+
+        return render(request, "webapp/projects_page.html", {
+            "projects_data": projects_data,
+            "title": "- Projects Page",
+            "year": get_year()
+        })
+
+
+class RemoveUserFromProjects(LoginRequiredMixin, View):
+    def post(self, request):
+        project_name = request.POST.get("project_name")
+        user_id = request.POST.get("user_id")
+
+        project = get_object_or_404(Project, name=project_name)
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        project.user.remove(user)
+        return JsonResponse({'success': True})
 
 
 class RegisterPage(View):
@@ -250,32 +280,3 @@ class RegisterPage(View):
             "year": get_year()})
 
 
-class ProjectsPage(LoginRequiredMixin, View):
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return self.handle_no_permission()
-
-        if request.user.user_type not in ['hse_inspector', 'project_manager', 'company_representative']:
-            return redirect(reverse('intro_page'))
-
-        return super().dispatch(request, *args, **kwargs)
-
-    def get(self, request):
-        projects_data = Project.objects.filter(user=request.user)
-        return render(request, "webapp/projects_page.html", {
-            "projects_data": projects_data,
-            "title": "- Projects Page",
-            "year": get_year()
-        })
-
-
-class RemoveUserFromProjects(LoginRequiredMixin, View):
-    def post(self, request):
-        project_name = request.POST.get("project_name")
-        user_id = request.POST.get("user_id")
-
-        project = get_object_or_404(Project, name=project_name)
-        user = get_object_or_404(CustomUser, id=user_id)
-
-        project.user.remove(user)
-        return JsonResponse({'success': True})

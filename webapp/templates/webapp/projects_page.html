@@ -28,18 +28,18 @@
                 </td>
                 <td>
                     <ul>
-                        {% for user_data in project.user.all %}
+                        {% for user_data in project.users_sorted %}
                         <li id="user-{{ user_data.id }}" class="table-projects projects-li">{{ user_data.first_name }} {{ user_data.last_name }}
                             <a href="#" class="remove-user" data-user-id="{{ user_data.id }}"
                                data-user-fullname="{{ user_data.first_name}} {{user_data.last_name }}"
                                data-project-name="{{ project.name }}"
                                data-url="{% url 'remove_user_from_project' %}" title="Remove">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                     class="bi bi-x remove-user-icon" viewBox="0 0 16 16">
-                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1
-                                    .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8
-                                    8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                                </svg>
+                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                   class="bi bi-x remove-user-icon" viewBox="0 0 16 16">
+                                   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1
+                                   .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8
+                                   8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                               </svg>
                             </a>
                         </li>
                         {% endfor %}
