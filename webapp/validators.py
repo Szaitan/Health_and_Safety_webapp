@@ -2,7 +2,8 @@
 
 import re
 from django.core.exceptions import ValidationError
-from .models import CustomUser, Project
+from django.shortcuts import get_object_or_404
+from .models import CustomUser, CustomerCompany, Project
 
 
 def validate_password(value):
@@ -26,3 +27,14 @@ def validate_unique_email(value, current_user=None):
 def validate_unique_project_name(value):
     if Project.objects.filter(name=value):
         raise ValidationError("Project name is already in use. Chose another one.")
+
+
+def validate_companies_identification_number(value):
+    if re.search(r'[!@#$%^&*(),.?":{}|<>]', value):
+        raise ValidationError("Tax identification number should only contain numbers.")
+    if re.search(r'[A-Z]', value):
+        raise ValidationError("Tax identification number should only contain numbers.")
+    if re.search(r'[a-z]', value):
+        raise ValidationError("Tax identification number should only contain numbers.")
+    if not CustomerCompany.objects.filter(taxpayer_identification_number=value):
+        raise ValidationError("This taxpayer identification number does not exist in database.")

@@ -14,6 +14,7 @@ class CustomerCompanyEmails(models.Model):
 
 class CustomerCompany(models.Model):
     name = models.CharField(max_length=75)
+    taxpayer_identification_number = models.IntegerField(unique=True)
     num_of_projects = models.IntegerField()
     general_emails = models.ManyToManyField(CustomerCompanyEmails)
 

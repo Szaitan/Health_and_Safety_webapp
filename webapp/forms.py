@@ -1,7 +1,8 @@
 from django import forms
 from django.core import validators
 from .models import CustomerCompany, Project, CustomUser
-from .validators import validate_password, validate_unique_email, validate_unique_project_name
+from .validators import validate_password, validate_unique_email, validate_unique_project_name,\
+    validate_companies_identification_number
 from .model_functions import generate_password
 
 
@@ -62,10 +63,7 @@ class LoginForm(forms.Form):
 # Register form allow people to  fill the template which will be sent to customer companies email/or emails asking
 # to be added.
 class RegisterForm(forms.Form):
-    customer_companies = forms.ModelChoiceField(
-        queryset=CustomerCompany.objects.all(),
-        widget=forms.Select,
-    )
+    company_tax_identification_number = forms.CharField(validators=[validate_companies_identification_number])
     first_name = forms.CharField(min_length=1, max_length=35)
     last_name = forms.CharField(min_length=1, max_length=50)
     company = forms.CharField(min_length=1, max_length=50)

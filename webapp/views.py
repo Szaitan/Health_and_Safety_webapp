@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404,redirect, render, reverse
 from django.views import View
 from .views_functions import register_send_email
 from webapp.forms import AddUsertoProject, CreateProjectForm, CreateUserForm, EditUserForm, LoginForm, RegisterForm
-from .models import CustomerCompany, CustomUser, Project
+from .models import CustomerCompany, CustomerCompanyEmails, CustomUser, Project
 
 
 # Create your views here.
@@ -130,7 +130,7 @@ class CreateUserPage(LoginRequiredMixin, View):
             return render(request, "webapp/create_user_page.html", {
                 "form": form,
                 "year": get_year(),
-                "message": f"User {form.cleaned_data["first_name"]} {form.cleaned_data["last_name"]} "
+                "message": f"User {form.cleaned_data['first_name']} {form.cleaned_data['last_name']} "
                            f"created successfully."})
         return render(request, "webapp/create_user_page.html", {
             "form": form,
@@ -190,6 +190,8 @@ class IntroPageView(View):
 
 class LoginPage(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect("index_page")
         return render(request, "webapp/login_page.html", {
             "form": LoginForm(),
             "year": get_year()
@@ -264,11 +266,19 @@ class RegisterPage(View):
         form = RegisterForm(request.POST)
         if form.is_valid():
             clean_data = form.cleaned_data
+            # Preparation of list which containes email adress connected to this company tax id
+            customer_companies_emails_query_list = [email for email in CustomerCompanyEmails.objects.filter(
+                customercompany__taxpayer_identification_number=
+                clean_data["company_tax_identification_number"]).values_list('email', flat=True)]
 
-            # customer_companies_emails_query_list = [email for email in CustomerCompanyEmails.objects.filter(
-            #     customercompany__name=clean_data["customer_companies"].name).values_list('email', flat=True)]
-            # register_send_email(clean_data["customer_companies"].name, clean_data["first_name"], clean_data["last_name"],
-            #                     clean_data["company"], clean_data["email"], customer_companies_emails_query_list)
+            # Company object for company name
+            company_object = CustomerCompany.objects.get(taxpayer_identification_number=
+                                                         clean_data["company_tax_identification_number"])
+
+            # Sending email with user form for registration to filtrated emails
+            register_send_email(company_object.name, clean_data["first_name"],
+                                clean_data["last_name"], clean_data["company"],
+                                clean_data["email"], customer_companies_emails_query_list)
 
             return render(request, 'webapp/register_page.html', {
                 'form': form,
