@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+    min-height: 83vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.send-button {
+    background-color: #1a1a1a;
+    height: 10%;
+    padding: 18px;
+    width: 40%;
+    display: block;
+    text-align: center;
+}
+
+
+.send-button:hover {
+    color: #00e600;
+}
+
+.card_and_incident-div {
+    text-align: center; /* Center objects in the area */
+    width: 60%;
+    height: 100vh;
+    background-color: #1a1a1a;
+    border-radius: 10%;
+    align-items: center;
+    margin: 30px 30px;
+}
+
+.errorlist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: red;
+}
+
+#id_project, #id_observed_company, #id_type, #id_description, #id_issued_card, #id_date {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+    width: 40%;
+    text-font: 40px;
+}
+
+#id_description {
+    height: 12vh;
+}
+
+label {
+    font-size: 1.2em;
+}
+
+@media screen and (max-width: 800px) {
+    #id_project, #id_observed_company, #id_type, #id_description, #id_issued_card, #id_date {
+        width: 80%;
+    }
+
+    #issued_card {
+        width: 80%;
+    }
+
+    label {
+        font-size: 1.8em;
+    }
+
+    .send-button {
+        padding: 18px;
+        width: 40%;
+    }
+
+}

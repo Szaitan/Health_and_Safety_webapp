@@ -64,3 +64,27 @@ class Project(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class CardAndIncidents(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.CharField(max_length=60)
+    user_company = models.CharField(max_length=60)
+    observed_company = models.CharField(max_length=60)
+    date = models.DateField()
+    year = models.DateField()
+    week = models.CharField(max_length=20)
+    type = models.CharField(max_length=40, choices=(
+        ("hazard_situation", "Hazard Situation"),
+        ("alcohol", "Alcohol"),
+        ("near_miss", "Near Miss"),
+        ("positive_observation", "Positive Observation")
+    ))
+    description = models.CharField(max_length=100)
+    issued_card = models.CharField(max_length=40, choices=(
+        ("green", "Green"),
+        ("yellow", "Yellow"),
+        ("red", "Red"),
+        ("black", "Black")
+    ))
+

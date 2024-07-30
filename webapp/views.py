@@ -6,7 +6,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404,redirect, render, reverse
 from django.views import View
 from .views_functions import register_send_email
-from webapp.forms import AddUsertoProject, CreateProjectForm, CreateUserForm, EditUserForm, LoginForm, RegisterForm
+from webapp.forms import AddUsertoProject, CreateProjectForm, CreateUserForm, EditUserForm, LoginForm, RegisterForm,\
+    CardAndIncidentForm
 from .models import CustomerCompany, CustomerCompanyEmails, CustomUser, Project
 
 
@@ -47,6 +48,26 @@ class AddUserToProject(LoginRequiredMixin, View):
         return render(request, 'webapp/add_user_to_project_page.html', {
             "project_name": project_name,
             "form": form
+        })
+
+
+# Page for creation of cards
+class CardAndIncidentPage(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if request.user.user_type not in ['hse_inspector', 'project_manager', 'company_representative']:
+            return redirect(reverse('intro_page'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        current_user = request.user
+        form = CardAndIncidentForm(current_user=request.user)
+        return render(request, "webapp/card_and_incident_page.html", {
+            "form": form,
+            "year": get_year(),
         })
 
 

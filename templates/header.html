@@ -17,8 +17,8 @@
                             Options
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'projects_page' %}">Projects</a></li>
                             <li><a class="dropdown-item" href="{% url 'create_user_page' %}">Create User</a></li>
+                            <li><a class="dropdown-item" href="{% url 'projects_page' %}">Projects Page</a></li>
                             {% if user.is_authenticated and user.user_type == "company_representative" %}<li><a class="dropdown-item" href="{% url 'create_project_page' %}">Create Project</a></li>{% endif %}
                         </ul>
                     </li>
@@ -29,8 +29,7 @@
                             Send Report
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"></a></li>
-                            {% if user.user_type == "hse_inspector" %}<li><a class="dropdown-item" href="{% url 'intro_page' %}">Register company</a></li>{% endif %}
+                            <li><a class="dropdown-item" href="{% url 'card_and_incident_page' %}">Cards</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>

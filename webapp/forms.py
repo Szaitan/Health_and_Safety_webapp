@@ -14,6 +14,31 @@ class AddUsertoProject(forms.Form):
         self.fields['user'].queryset = CustomUser.objects.all()
 
 
+class CardAndIncidentForm(forms.Form):
+    project = forms.ModelChoiceField(queryset=Project.objects.none())
+    observed_company = forms.CharField(max_length=60)
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    type = forms.ChoiceField(choices=(
+        ("alcohol", "Alcohol"),
+        ("hazard_situation", "Hazard Situation"),
+        ("near_miss", "Near Miss"),
+        ("positive_observation", "Positive Observation")
+    ))
+    issued_card = forms.ChoiceField(choices=(
+        ("black", "Black"),
+        ("green", "Green"),
+        ("red", "Red"),
+        ("yellow", "Yellow")
+    ))
+    description = forms.CharField(max_length=100, widget=forms.Textarea(attrs={
+            'style': 'resize: none;'}))
+
+    def __init__(self, *args, **kwargs):
+        self.current_user = kwargs.pop('current_user', None)
+        super(CardAndIncidentForm, self).__init__(*args, **kwargs)
+        self.fields["project"].queryset = Project.objects.filter(user=self.current_user)
+
+
 class CreateProjectForm(forms.Form):
     name = forms.CharField(min_length=1, max_length=40, validators=[validate_unique_project_name])
 

@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.IntroPageView.as_view(), name="intro_page"),
     path("add_user_to_project_page/<str:project_name>", views.AddUserToProject.as_view(), name="add_user_to_project"),
+    path("card_and_incident", views.CardAndIncidentPage.as_view(), name="card_and_incident_page"),
     path("create_project_page", views.CreateProjectPage.as_view(), name="create_project_page"),
     path("create_user_page", views.CreateUserPage.as_view(), name="create_user_page"),
     path("edit_user_page", views.EditUserPage.as_view(), name="edit_user_page"),

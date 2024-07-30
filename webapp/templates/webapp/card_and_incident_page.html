@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SafeSite Card and Incident{% endblock %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'webapp/card_and_incident_page/css/card_and_incident_css.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+    <div class="container">
+        <div class="row card_and_incident-div">
+            <div class="col-lg-12">
+                <form action="{% url 'card_and_incident_page' %}" method="POST">
+                    <h3 class="m-3">Card and Incident Form</h3>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    {% endfor %}
+                    <button class="btn btn-secondary send-button mx-auto m-2">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}{% with year=year %}{% endwith %}
+{% endblock %}
+
