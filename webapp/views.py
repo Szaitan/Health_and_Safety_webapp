@@ -8,7 +8,7 @@ from django.views import View
 from .views_functions import register_send_email
 from webapp.forms import AddUsertoProject, CreateProjectForm, CreateUserForm, EditUserForm, LoginForm, RegisterForm,\
     CardAndIncidentForm
-from .models import CustomerCompany, CustomerCompanyEmails, CustomUser, Project
+from .models import CustomerCompany, CustomerCompanyEmails, CustomUser, Project, CardAndIncident
 
 
 # Create your views here.
@@ -63,8 +63,31 @@ class CardAndIncidentPage(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        current_user = request.user
         form = CardAndIncidentForm(current_user=request.user)
+        return render(request, "webapp/card_and_incident_page.html", {
+            "form": form,
+            "year": get_year(),
+        })
+
+    def post(self, request):
+        form = CardAndIncidentForm(request.POST, current_user=request.user)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            print(f"{form_data['date'].strftime('%W')} of {form_data['date'].year}")
+            CardAndIncident.objects.create(
+                project=form_data["project"],
+                user=f"{request.user.first_name} {request.user.last_name}",
+                user_company=request.user.user_company,
+                observed_company=form_data["observed_company"],
+                date=form_data["date"],
+                year=int(form_data["date"].year),
+                week=f"{form_data['date'].strftime('%W')} of {form_data['date'].year}",
+                type=form_data["type"],
+                description=form_data["description"],
+                issued_card=form_data["issued_card"]
+            )
+            return redirect(reverse('index_page'))
+
         return render(request, "webapp/card_and_incident_page.html", {
             "form": form,
             "year": get_year(),

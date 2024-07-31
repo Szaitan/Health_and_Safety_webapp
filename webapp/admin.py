@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from webapp.models import CustomerCompany, CustomerCompanyEmails, Project, CustomUser
+from webapp.models import CardAndIncident, CustomerCompany, CustomerCompanyEmails, Project, CustomUser
 
 
 # Register your models here.
+
+class CardAndIncidentAdmin(admin.ModelAdmin):
+    list_filter = ("user", "user_company", "project", "week", "issued_card")
+    list_display = ("user", "user_company", "project", "week", "issued_card")
 
 
 class CustomerCompanyAdmin(admin.ModelAdmin):
@@ -29,6 +33,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_filter = ('name', "company")
 
 
+admin.site.register(CardAndIncident, CardAndIncidentAdmin)
 admin.site.register(CustomerCompany, CustomerCompanyAdmin)
 admin.site.register(CustomerCompanyEmails, CustomerCompanyEmailAdmin)
 admin.site.register(CustomUser, CustomUserAdmin)
