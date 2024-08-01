@@ -9,7 +9,7 @@ $(document).ready(function() {
         event.preventDefault();
         if (confirm("Are you sure you want to remove this user from this project?")) {
             const userId = $(this).data('user-id');
-            const projectName = $(this).data('project-name');
+            const slug = $(this).data('slug');
             const userFullName = $(this).data('user-fullname');
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
             const url = $(this).data('url');
@@ -19,7 +19,7 @@ $(document).ready(function() {
                 url: url,
                 data: {
                     'user_id': userId,
-                    'project_name': projectName,
+                    'slug': slug,
                     'csrfmiddlewaretoken': csrfToken
                 },
                 success: function(response) {

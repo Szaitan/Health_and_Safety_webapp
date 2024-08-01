@@ -32,7 +32,7 @@
                         <li id="user-{{ user_data.id }}" class="table-projects projects-li">{{ user_data.first_name|title }} {{ user_data.last_name|title }}
                             <a href="#" class="remove-user" data-user-id="{{ user_data.id }}"
                                data-user-fullname="{{ user_data.first_name}} {{user_data.last_name }}"
-                               data-project-name="{{ project.name }}"
+                               data-slug="{{ project.slug }}"
                                data-url="{% url 'remove_user_from_project' %}" title="Remove">
                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                    class="bi bi-x remove-user-icon" viewBox="0 0 16 16">
