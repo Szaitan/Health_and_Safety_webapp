@@ -27,26 +27,29 @@ class AddUserToProject(LoginRequiredMixin, View):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def get(self, request, project_name):
+    def get(self, request, project_slug):
         form = AddUsertoProject()
-        return render(request, "webapp/add_user_to_project_page.html",
-                      {"project_name": project_name,
-                       "form": form,
-                       })
+        project = get_object_or_404(Project, slug=project_slug)
+        return render(request, "webapp/add_user_to_project_page.html", {
+            "project_slug": project_slug,
+            "project_name": project.name,
+            "form": form,
+        })
 
-    def post(self, request, project_name):
+    def post(self, request, project_slug):
         form = AddUsertoProject(request.POST)
+        project = get_object_or_404(Project, slug=project_slug)
         if form.is_valid():
-            project = Project.objects.get(name=project_name)
             project.user.add(form.cleaned_data["user"])
             project.save()
             return render(request, 'webapp/add_user_to_project_page.html', {
-                "project_name": project_name,
-                'form': form,
-                'message': f"User {form.cleaned_data['user']} has been successfully added to project {project.name}"
+                "project_name": project.name,
+                "project_slug": project_slug,
+                "form": form,
+                "message": f"User {form.cleaned_data['user']} has been successfully added to project {project.name}"
             })
         return render(request, 'webapp/add_user_to_project_page.html', {
-            "project_name": project_name,
+            "project_name": project.name,
             "form": form
         })
 
@@ -106,30 +109,30 @@ class CreateProjectPage(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        form = CreateProjectForm()
+        form = CreateProjectForm(current_user=request.user)
         return render(request, "webapp/create_project_page.html", {
             "form": form,
             "year": get_year()
         })
 
     def post(self, request):
-        form = CreateProjectForm(request.POST)
+        form = CreateProjectForm(request.POST, current_user=request.user)
 
         if form.is_valid():
             # Checking number of projects
-            user_company = CustomerCompany.objects.get(name=request.user.user_company)
+            user_company_name = request.user.user_company
+            user_company = CustomerCompany.objects.get(name=user_company_name)
             current_num_projects = Project.objects.filter(company=user_company)
             if user_company.num_of_projects == current_num_projects.count():
                 return render(request, "webapp/create_project_page.html", {
                     "form": form,
                     "year": get_year(),
-                    "message": f"Total number of projects reach maximum. Please buy more project slots."
+                    "message": "Total number of projects reached maximum. Please buy more project slots."
                 })
 
             # Creation of project
             form_clean_data = form.cleaned_data
-            project_name = form_clean_data["name"].lower()
-            user_company = CustomerCompany.objects.get(name=request.user.user_company)
+            project_name = form_clean_data['name']
             project = Project.objects.create(name=project_name, company=user_company)
             project.user.set([request.user])
             return render(request, "webapp/create_project_page.html", {

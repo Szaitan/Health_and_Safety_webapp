@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
@@ -58,12 +59,17 @@ class CustomUser(AbstractUser):
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30)
     company = models.ForeignKey(CustomerCompany, on_delete=models.CASCADE)
     user = models.ManyToManyField(CustomUser, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name}"
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f"{self.company}-{self.name}")
+        super().save(*args, **kwargs)
 
 
 class ProjectDatabase(models.Model):
@@ -99,3 +105,5 @@ class CardAndIncident(models.Model):
         ("black", "Black")
     ))
 
+    def __str__(self):
+        return f"{self.project} {self.issued_card}"

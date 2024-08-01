@@ -43,7 +43,7 @@
                             </a>
                         </li>
                         {% endfor %}
-                        <li class="table-projects"><a href="{% url 'add_user_to_project' project.name %}">Add user</a></li>
+                        <li class="table-projects"><a href="{% url 'add_user_to_project' project.slug %}">Add user</a></li>
                     </ul>
                 </td>
             </tr>

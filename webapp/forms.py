@@ -1,8 +1,8 @@
 from django import forms
 from django.core import validators
+from django.core.exceptions import ValidationError
 from .models import CustomerCompany, Project, CustomUser
-from .validators import validate_password, validate_unique_email, validate_unique_project_name,\
-    validate_companies_identification_number
+from .validators import (validate_password, validate_unique_email, validate_companies_identification_number)
 from .model_functions import generate_password
 
 
@@ -42,7 +42,24 @@ class CardAndIncidentForm(forms.Form):
 
 
 class CreateProjectForm(forms.Form):
-    name = forms.CharField(min_length=1, max_length=40, validators=[validate_unique_project_name])
+    name = forms.CharField(min_length=1, max_length=40)
+
+    def __init__(self, *args, **kwargs):
+        self.current_user = kwargs.pop('current_user', None)
+        super(CreateProjectForm, self).__init__(*args, **kwargs)
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name').lower()
+        user_company_name = self.current_user.user_company
+        try:
+            user_company = CustomerCompany.objects.get(name=user_company_name)
+        except CustomerCompany.DoesNotExist:
+            raise ValidationError(f"Company with name {user_company_name} does not exist.")
+
+        if Project.objects.filter(name=name, company=user_company).exists():
+            raise ValidationError(f"A project with the name '{name}' already exists in your company.")
+
+        return name
 
 
 class CreateUserForm(forms.Form):

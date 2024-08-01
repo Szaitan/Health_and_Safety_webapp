@@ -24,11 +24,6 @@ def validate_unique_email(value, current_user=None):
         raise ValidationError("Email is already in use.")
 
 
-def validate_unique_project_name(value):
-    if Project.objects.filter(name=value):
-        raise ValidationError("Project name is already in use. Chose another one.")
-
-
 def validate_companies_identification_number(value):
     if re.search(r'[!@#$%^&*(),.?":{}|<>]', value):
         raise ValidationError("Tax identification number should only contain numbers.")
