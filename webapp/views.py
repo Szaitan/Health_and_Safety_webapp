@@ -73,14 +73,15 @@ class CardAndIncidentPage(LoginRequiredMixin, View):
         form = CardAndIncidentForm(request.POST, current_user=request.user)
         if form.is_valid():
             form_data = form.cleaned_data
-            print(f"{form_data['date'].strftime('%W')} of {form_data['date'].year}")
+
             CardAndIncident.objects.create(
                 project=form_data["project"],
-                user=f"{request.user.first_name} {request.user.last_name}",
-                user_company=request.user.user_company,
-                observed_company=form_data["observed_company"],
+                contractor=form_data["contractor"].lower(),
+                subcontractor=form_data["subcontractor"].lower(),
+                name_surname=form_data["name_surname"].lower(),
                 date=form_data["date"],
                 year=int(form_data["date"].year),
+                month=int(form_data["date"].month),
                 week=f"{form_data['date'].strftime('%W')} of {form_data['date'].year}",
                 type=form_data["type"],
                 description=form_data["description"],
@@ -127,7 +128,7 @@ class CreateProjectPage(LoginRequiredMixin, View):
 
             # Creation of project
             form_clean_data = form.cleaned_data
-            project_name = form_clean_data["name"]
+            project_name = form_clean_data["name"].lower()
             user_company = CustomerCompany.objects.get(name=request.user.user_company)
             project = Project.objects.create(name=project_name, company=user_company)
             project.user.set([request.user])

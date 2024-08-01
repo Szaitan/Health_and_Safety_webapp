@@ -24,12 +24,12 @@
             {% for project in projects_data %}
             <tr>
                 <td>
-                    {{ project.name }}
+                    {{ project.name|title }}
                 </td>
                 <td>
                     <ul>
                         {% for user_data in project.users_sorted %}
-                        <li id="user-{{ user_data.id }}" class="table-projects projects-li">{{ user_data.first_name }} {{ user_data.last_name }}
+                        <li id="user-{{ user_data.id }}" class="table-projects projects-li">{{ user_data.first_name|title }} {{ user_data.last_name|title }}
                             <a href="#" class="remove-user" data-user-id="{{ user_data.id }}"
                                data-user-fullname="{{ user_data.first_name}} {{user_data.last_name }}"
                                data-project-name="{{ project.name }}"

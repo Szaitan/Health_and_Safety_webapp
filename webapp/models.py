@@ -66,13 +66,24 @@ class Project(models.Model):
         return f"{self.name}"
 
 
-class CardAndIncident(models.Model):
+class ProjectDatabase(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    user = models.CharField(max_length=60)
     user_company = models.CharField(max_length=60)
-    observed_company = models.CharField(max_length=60)
+    contractor_company = models.CharField(max_length=60)
     date = models.DateField()
     year = models.IntegerField()
+    month = models.IntegerField()
+    week = models.CharField(max_length=20)
+
+
+class CardAndIncident(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    contractor = models.CharField(max_length=60)
+    subcontractor = models.CharField(max_length=60)
+    name_surname = models.CharField(max_length=80)
+    date = models.DateField()
+    year = models.IntegerField()
+    month = models.IntegerField()
     week = models.CharField(max_length=20)
     type = models.CharField(max_length=40, choices=(
         ("hazard_situation", "Hazard Situation"),

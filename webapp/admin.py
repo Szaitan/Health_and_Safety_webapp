@@ -6,8 +6,8 @@ from webapp.models import CardAndIncident, CustomerCompany, CustomerCompanyEmail
 # Register your models here.
 
 class CardAndIncidentAdmin(admin.ModelAdmin):
-    list_filter = ("user", "user_company", "project", "week", "issued_card")
-    list_display = ("user", "user_company", "project", "week", "issued_card")
+    list_filter = ("project", "contractor", "subcontractor", "name_surname", "issued_card")
+    list_display = ("project", "contractor", "subcontractor", "name_surname", "issued_card")
 
 
 class CustomerCompanyAdmin(admin.ModelAdmin):

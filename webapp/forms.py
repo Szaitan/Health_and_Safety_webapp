@@ -16,7 +16,9 @@ class AddUsertoProject(forms.Form):
 
 class CardAndIncidentForm(forms.Form):
     project = forms.ModelChoiceField(queryset=Project.objects.none())
-    observed_company = forms.CharField(max_length=60)
+    contractor = forms.CharField(max_length=60)
+    subcontractor = forms.CharField(max_length=60)
+    name_surname = forms.CharField(max_length=80)
     date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     type = forms.ChoiceField(choices=(
         ("alcohol", "Alcohol"),
@@ -36,7 +38,7 @@ class CardAndIncidentForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.current_user = kwargs.pop('current_user', None)
         super(CardAndIncidentForm, self).__init__(*args, **kwargs)
-        self.fields["project"].queryset = Project.objects.filter(user=self.current_user)
+        self.fields["project"].queryset = Project.objects.filter(user=self.current_user).order_by("name")
 
 
 class CreateProjectForm(forms.Form):
