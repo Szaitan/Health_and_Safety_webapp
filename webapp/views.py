@@ -294,13 +294,15 @@ class ProjectsPage(LoginRequiredMixin, View):
 class RemoveUserFromProjects(LoginRequiredMixin, View):
     def post(self, request):
         slug = request.POST.get("slug")
-        print(slug)
         user_id = request.POST.get("user_id")
 
         project = get_object_or_404(Project, slug=slug)
         user = get_object_or_404(CustomUser, id=user_id)
 
         project.user.remove(user)
+        # If this is the last user in project, project will be removed.
+        if not project.user.exists():
+            project.delete()
         return JsonResponse({'success': True})
 
 

@@ -7,7 +7,9 @@
 $(document).ready(function() {
     $('.remove-user').on('click', function(event) {
         event.preventDefault();
-        if (confirm("Are you sure you want to remove this user from this project?")) {
+        if (confirm
+        ("Are you sure you want to remove this user from this project?\nIf user is the last, it will delete project."))
+        {
             const userId = $(this).data('user-id');
             const slug = $(this).data('slug');
             const userFullName = $(this).data('user-fullname');
