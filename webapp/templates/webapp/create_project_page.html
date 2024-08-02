@@ -17,10 +17,12 @@
                     <div class="alert alert-success" role="alert">
                         {{ message }}
                     </div>
-                    <div class="alert alert-success" role="alert">
-                        <p>You will be transferred to projects page in:</p><div id="countdown"></div>
-                        <script src="{% static 'redirection_to_project_page.js' %}"></script>
-                    </div>
+                        {% if message != "Total number of projects reached maximum. Please buy more project slots." %}
+                        <div class="alert alert-success" role="alert">
+                            <p>You will be transferred to projects page in:</p><div id="countdown"></div>
+                            <script src="{% static 'redirection_to_project_page.js' %}"></script>
+                        </div>
+                        {% endif %}
                     {% endif %}
 
                     {% csrf_token %}
