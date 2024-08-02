@@ -300,7 +300,7 @@ class RemoveUserFromProjects(LoginRequiredMixin, View):
         user = get_object_or_404(CustomUser, id=user_id)
 
         project.user.remove(user)
-        # If this is the last user in project, project will be removed.
+        # If this is the last user in project, project will be removed plus information regarding removing user.
         if not project.user.exists():
             project.delete()
         return JsonResponse({'success': True})
