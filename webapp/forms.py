@@ -15,25 +15,27 @@ class AddUsertoProject(forms.Form):
 
 
 class CardAndIncidentForm(forms.Form):
-    project = forms.ModelChoiceField(queryset=Project.objects.none())
-    contractor = forms.CharField(max_length=60)
-    subcontractor = forms.CharField(max_length=60)
-    name_surname = forms.CharField(max_length=80)
-    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    project = forms.ModelChoiceField(queryset=Project.objects.none(),
+                                     help_text="Select a project for your card:")
+    contractor = forms.CharField(max_length=60, help_text="Select contractor:")
+    subcontractor = forms.CharField(max_length=60, help_text="Select subcontractor:")
+    name_surname = forms.CharField(max_length=80, help_text="Name and Surname of person:")
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), help_text="Select date:")
     type = forms.ChoiceField(choices=(
         ("alcohol", "Alcohol"),
         ("hazard_situation", "Hazard Situation"),
         ("near_miss", "Near Miss"),
         ("positive_observation", "Positive Observation")
-    ))
+    ), help_text="Select type of observation:")
     issued_card = forms.ChoiceField(choices=(
         ("black", "Black"),
         ("green", "Green"),
         ("red", "Red"),
         ("yellow", "Yellow")
-    ))
-    description = forms.CharField(max_length=100, widget=forms.Textarea(attrs={
-            'style': 'resize: none;'}))
+    ), help_text="Select card:")
+    description = forms.CharField(max_length=100,
+                                  widget=forms.Textarea(attrs={'style': 'resize: none;'}),
+                                  help_text="Describe observed situation:")
 
     def __init__(self, *args, **kwargs):
         self.current_user = kwargs.pop('current_user', None)
@@ -84,7 +86,8 @@ class EditUserForm(forms.Form):
     last_name = forms.CharField(min_length=1, max_length=50)
     company = forms.CharField(min_length=1, max_length=50)
     email = forms.EmailField()
-    password = forms.CharField(validators=[validate_password], required=False, help_text="In case, change password.")
+    password = forms.CharField(validators=[validate_password], required=False,
+                               help_text="Leave empty, to not change password")
 
     def __init__(self, *args, **kwargs):
         #  We need to catch argument that is passed to form, or we will have an error

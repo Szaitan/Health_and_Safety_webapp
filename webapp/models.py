@@ -92,8 +92,8 @@ class CardAndIncident(models.Model):
     month = models.IntegerField()
     week = models.CharField(max_length=20)
     type = models.CharField(max_length=40, choices=(
-        ("hazard_situation", "Hazard Situation"),
         ("alcohol", "Alcohol"),
+        ("hazard_situation", "Hazard Situation"),
         ("near_miss", "Near Miss"),
         ("positive_observation", "Positive Observation")
     ))
@@ -106,4 +106,4 @@ class CardAndIncident(models.Model):
     ))
 
     def __str__(self):
-        return f"{self.project} {self.contractor} {self.issued_card}"
+        return f"{self.project}-{self.contractor}-{self.issued_card}"

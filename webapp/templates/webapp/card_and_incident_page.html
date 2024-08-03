@@ -15,7 +15,7 @@
                     <h3 class="m-3">Card and Incident Form</h3>
                     {% csrf_token %}
                     {% for field in form %}
-                        {{ field.label_tag|title }}
+                        <span class="help-icon" data-toggle="tooltip" title="{{ field.help_text }}">&#9432;</span>{{ field.label_tag|title }}
                         {{ field }}
                         {{ field.errors }}
                     {% endfor %}
