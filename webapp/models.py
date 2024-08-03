@@ -106,4 +106,4 @@ class CardAndIncident(models.Model):
     ))
 
     def __str__(self):
-        return f"{self.project} {self.issued_card}"
+        return f"{self.project} {self.contractor} {self.issued_card}"
