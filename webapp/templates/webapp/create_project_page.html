@@ -27,7 +27,7 @@
 
                     {% csrf_token %}
                     {% for field in form %}
-                        {{ field.label_tag }}
+                        <span class="help-icon" data-toggle="tooltip" title="{{ field.help_text }}">&#9432;</span>{{ field.label_tag|title }}
                         {{ field }}
                         {{ field.errors }}
                     {% endfor %}

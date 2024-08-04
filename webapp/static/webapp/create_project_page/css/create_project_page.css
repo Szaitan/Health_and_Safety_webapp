@@ -35,6 +35,12 @@
   color: red;
 }
 
+.help-icon {
+    font-size: 20px;
+    display: inline-block;
+    padding-right: 5px;
+}
+
 #id_name {
     display: block;
     margin: 10px auto;

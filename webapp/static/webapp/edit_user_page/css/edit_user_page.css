@@ -25,11 +25,10 @@
     color: #00e600;
 }
 
-.help-text {
-    color: #00e600;
-    font-size: 12px;
-    margin-bottom: 10px;
-    display: block; /* Upewnia się, że tekst jest w nowej linii */
+.help-icon {
+    font-size: 20px;
+    display: inline-block;
+    padding-right: 5px;
 }
 
 .save-div {

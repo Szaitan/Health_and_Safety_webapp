@@ -1,3 +1,12 @@
+.add_to_proj-div {
+    text-align: center; /* Center objects in the area */
+    width: 60%;
+    height: 50vh;
+    background-color: #1a1a1a;
+    border-radius: 10%;
+    align-items: center;
+}
+
 .container {
     display: flex;
     min-height: 83vh;
@@ -11,6 +20,12 @@
     padding: 5px;
     width: 40%;
     text-font: 40px;
+}
+
+.help-icon {
+    font-size: 20px;
+    display: inline-block;
+    padding-right: 5px;
 }
 
 label {
@@ -28,15 +43,6 @@ label {
 
 .log-in-button:hover {
     color: #00e600;
-}
-
-.add_to_proj-div {
-    text-align: center; /* Center objects in the area */
-    width: 60%;
-    height: 50vh;
-    background-color: #1a1a1a;
-    border-radius: 10%;
-    align-items: center;
 }
 
 

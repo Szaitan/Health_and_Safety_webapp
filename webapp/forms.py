@@ -7,7 +7,7 @@ from .model_functions import generate_password
 
 
 class AddUsertoProject(forms.Form):
-    user = forms.ModelChoiceField(queryset=CustomUser.objects.none())
+    user = forms.ModelChoiceField(queryset=CustomUser.objects.none(), help_text="Select user from list to add:")
 
     def __init__(self, *args, **kwargs):
         super(AddUsertoProject, self).__init__(*args, **kwargs)
@@ -44,13 +44,14 @@ class CardAndIncidentForm(forms.Form):
 
 
 class CreateProjectForm(forms.Form):
-    name = forms.CharField(min_length=1, max_length=40)
+    name = forms.CharField(min_length=1, max_length=40, help_text="Name of the project:")
 
     def __init__(self, *args, **kwargs):
         self.current_user = kwargs.pop('current_user', None)
         super(CreateProjectForm, self).__init__(*args, **kwargs)
 
     def clean_name(self):
+        # Instead of passing variables to validator, we can make validation inside clean_name
         name = self.cleaned_data.get('name').lower()
         user_company_name = self.current_user.user_company
         try:
@@ -65,14 +66,15 @@ class CreateProjectForm(forms.Form):
 
 
 class CreateUserForm(forms.Form):
-    first_name = forms.CharField(min_length=1, max_length=35)
-    last_name = forms.CharField(min_length=1, max_length=50)
-    company = forms.CharField(min_length=1, max_length=50)
-    email = forms.EmailField(validators=[validate_unique_email])
+    first_name = forms.CharField(min_length=1, max_length=35, help_text="User first name:")
+    last_name = forms.CharField(min_length=1, max_length=50, help_text="User last name:")
+    company = forms.CharField(min_length=1, max_length=50, help_text="User company:")
+    email = forms.EmailField(validators=[validate_unique_email], help_text="User email:")
     user_type = forms.ChoiceField(choices=(("base_user", "Base User"), ("hse_inspector", "HSE Inspector"),
                                            ("project_manager", "Project Manager"),
-                                           ("company_representative", "Company Representative")))
-    password = forms.CharField(validators=[validate_password])
+                                           ("company_representative", "Company Representative")),
+                                  help_text="Select user type:")
+    password = forms.CharField(validators=[validate_password], help_text="Password is generated automatically:")
 
     def __init__(self, *args, **kwargs):
         super(CreateUserForm, self).__init__(*args, **kwargs)
@@ -82,18 +84,17 @@ class CreateUserForm(forms.Form):
 
 
 class EditUserForm(forms.Form):
-    first_name = forms.CharField(min_length=1, max_length=35)
-    last_name = forms.CharField(min_length=1, max_length=50)
-    company = forms.CharField(min_length=1, max_length=50)
-    email = forms.EmailField()
+    first_name = forms.CharField(min_length=1, max_length=35, help_text="Name of the user:")
+    last_name = forms.CharField(min_length=1, max_length=50, help_text="Surname of the user")
+    company = forms.CharField(min_length=1, max_length=50, help_text="Company of the user:")
+    email = forms.EmailField(help_text="Email of the user:")
     password = forms.CharField(validators=[validate_password], required=False,
-                               help_text="Leave empty, to not change password")
+                               help_text="Leave empty, to not change password:")
 
     def __init__(self, *args, **kwargs):
         #  We need to catch argument that is passed to form, or we will have an error
         self.current_user = kwargs.pop('current_user', None)
         super(EditUserForm, self).__init__(*args, **kwargs)
-        self.fields['password'].help_text = '<span class="help-text">%s</span>' % self.fields['password'].help_text
 
     def clean_email(self):
         # Allows to additionally affect email field with for example: validators

@@ -15,9 +15,8 @@
                     <h3 class="m-3">Edit Profile</h3>
                     {% csrf_token %}
                     {% for field in form %}
-                        {{ field.label_tag }}
+                        <span class="help-icon" data-toggle="tooltip" title="{{ field.help_text }}">&#9432;</span>{{ field.label_tag|title }}
                         {{ field }}
-                        <small class="form-text text-muted">{{ field.help_text|safe }}</small>
                         {{ field.errors }}
                     {% endfor %}
                     <div class="form-group">

@@ -14,10 +14,10 @@
         <div class="row add_to_proj-div">
             <div class="col-lg-12">
                 <form action="{% url 'add_user_to_project' project_slug %}" method="POST">
-                    <h3 class="m-3">Add User To Project: {{ project_name }}</h3>
+                    <h3 class="m-3">Add User To Project: {{ project_name|title }}</h3>
                     {% if message %}
                     <div class="alert alert-success" role="alert">
-                        {{ message }}
+                        {{ message|title }}
                     </div>
                     <div class="alert alert-success" role="alert">
                         <p>You will be transferred to projects page in:</p><div id="countdown"></div>
@@ -27,7 +27,7 @@
 
                     {% csrf_token %}
                     {% for field in form %}
-                        {{ field.label_tag }}
+                        <span class="help-icon" data-toggle="tooltip" title="{{ field.help_text }}">&#9432;</span>{{ field.label_tag|title }}
                         {{ field }}
                         {{ field.errors }}
                     {% endfor %}
