@@ -74,12 +74,14 @@ class Project(models.Model):
 
 class ProjectDatabase(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    user_company = models.CharField(max_length=60)
-    contractor_company = models.CharField(max_length=60)
+    contractor = models.CharField(max_length=60)
+    subcontractor = models.CharField(max_length=60)
     date = models.DateField()
     year = models.IntegerField()
     month = models.IntegerField()
     week = models.CharField(max_length=20)
+    average_number_people = models.FloatField()
+    hours_work = models.IntegerField()
 
 
 class CardAndIncident(models.Model):

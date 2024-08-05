@@ -17,8 +17,8 @@ class AddUsertoProject(forms.Form):
 class CardAndIncidentForm(forms.Form):
     project = forms.ModelChoiceField(queryset=Project.objects.none(),
                                      help_text="Select a project for your card:")
-    contractor = forms.CharField(max_length=60, help_text="Select contractor:")
-    subcontractor = forms.CharField(max_length=60, help_text="Select subcontractor:")
+    contractor = forms.CharField(max_length=60, help_text="Contractor name:")
+    subcontractor = forms.CharField(max_length=60, help_text="Subcontractor name:")
     name_surname = forms.CharField(max_length=80, help_text="Name and Surname of person:")
     date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), help_text="Select date:")
     type = forms.ChoiceField(choices=(
@@ -106,6 +106,20 @@ class EditUserForm(forms.Form):
 class LoginForm(forms.Form):
     email = forms.EmailField(validators=[validators.EmailValidator])
     password = forms.CharField(min_length=1, widget=forms.PasswordInput)
+
+
+class ProjectDatabaseForm(forms.Form):
+    project = forms.ModelChoiceField(queryset=Project.objects.none(), help_text="Select project database:")
+    contractor = forms.CharField(min_length=1, max_length=60, help_text="Contractor name:")
+    subcontractor = forms.CharField(max_length=60, help_text="Subcontractor name:")
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), help_text="Select date:")
+    average_number_people = forms.FloatField(min_value=0, help_text="Average number of people on site")
+    hours_work = forms.IntegerField(min_value=0, help_text="Subcontractor total number of hours")
+
+    def __init__(self, *args, **kwargs):
+        self.current_user = kwargs.pop('current_user', None)
+        super(ProjectDatabaseForm, self).__init__(*args, **kwargs)
+        self.fields["project"].queryset = Project.objects.filter(user=self.current_user).order_by("name")
 
 
 # Register form allow people to  fill the template which will be sent to customer companies email/or emails asking
