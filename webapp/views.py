@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404,redirect, render, reverse
 from django.views import View
 from .views_functions import register_send_email
 from webapp.forms import AddUsertoProject, CreateProjectForm, CreateUserForm, EditUserForm, LoginForm, RegisterForm,\
-    CardAndIncidentForm
+    CardAndIncidentForm, ProjectDatabaseForm
 from .models import CustomerCompany, CustomerCompanyEmails, CustomUser, Project, CardAndIncident
 
 
@@ -265,6 +265,24 @@ class LogoutPage(View):
     def get(self, request):
         logout(request)
         return redirect("intro_page")
+
+
+class ProjectDatabasePage(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if request.user.user_type not in ['hse_inspector', 'project_manager', 'company_representative']:
+            return redirect(reverse('intro_page'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        form = ProjectDatabaseForm(current_user=request.user)
+        return render(request, "webapp/project_database_page.html", {
+            "form": form,
+            "year": get_year()
+        })
 
 
 class ProjectsPage(LoginRequiredMixin, View):
