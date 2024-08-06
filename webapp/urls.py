@@ -11,9 +11,10 @@ urlpatterns = [
     path("index_page", views.IndexPage.as_view(), name="index_page"),
     path("login_page", views.LoginPage.as_view(), name="login_page"),
     path("logout_page", views.LogoutPage.as_view(), name="logout_page"),
-    path("project_database", views.ProjectDatabasePage.as_view(), name="project_database"),
+    path("project_database_page", views.ProjectDatabasePage.as_view(), name="project_database_page"),
     path("projects_page", views.ProjectsPage.as_view(), name="projects_page"),
     path("register_page", views.RegisterPage.as_view(), name="register_page"),
-    path("remove_user_from_project", views.RemoveUserFromProjects.as_view(), name="remove_user_from_project")
+    path("remove_user_from_project", views.RemoveUserFromProjects.as_view(), name="remove_user_from_project"),
+    path("site_observation_report", views.SiteObservationReportPage.as_view(), name="site_observation_report_page")
 ]
 

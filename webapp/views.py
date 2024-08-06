@@ -8,7 +8,7 @@ from django.views import View
 from .views_functions import register_send_email
 from webapp.forms import AddUsertoProject, CreateProjectForm, CreateUserForm, EditUserForm, LoginForm, RegisterForm,\
     CardAndIncidentForm, ProjectDatabaseForm
-from .models import CustomerCompany, CustomerCompanyEmails, CustomUser, Project, CardAndIncident
+from .models import CardAndIncident, CustomerCompany, CustomerCompanyEmails, CustomUser, Project, ProjectDatabase
 
 
 # Create your views here.
@@ -284,6 +284,31 @@ class ProjectDatabasePage(LoginRequiredMixin, View):
             "year": get_year()
         })
 
+    def post(self, request):
+        form = ProjectDatabaseForm(request.POST, current_user=request.user)
+        if form.is_valid():
+            project_database_clean_data = form.cleaned_data
+            ProjectDatabase.objects.create(
+                project=project_database_clean_data["project"],
+                contractor=project_database_clean_data["contractor"],
+                subcontractor=project_database_clean_data["subcontractor"],
+                date=project_database_clean_data["date"],
+                year=project_database_clean_data["date"].year,
+                month=project_database_clean_data["date"].month,
+                week=f"{project_database_clean_data['date'].strftime('%W')} of {project_database_clean_data['date'].year}",
+                average_number_people=project_database_clean_data["average_number_people"],
+                hours_work=project_database_clean_data["hours_work"],
+            )
+            return render(request, "webapp/project_database_page.html", {
+                "form": form,
+                "message": "Your database has been updated.",
+                "year": get_year()
+            })
+        return render(request, "webapp/project_database_page.html", {
+            "form": form,
+            "year": get_year()
+        })
+
 
 class ProjectsPage(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
@@ -359,3 +384,8 @@ class RegisterPage(View):
             "year": get_year()})
 
 
+class SiteObservationReportPage(View):
+    def get(self, request):
+        return render(render, "webapp/site_observation_report.html", {
+            "year": get_year(),
+        })

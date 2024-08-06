@@ -11,8 +11,13 @@
     <div class="container">
         <div class="row project_database-div">
             <div class="col-lg-12">
-                <form action="{% url 'card_and_incident_page' %}" method="POST">
-                    <h3 class="m-3">Project Database Form</h3>
+                <form action="{% url 'project_database_page' %}" method="POST">
+                    <h3 class="m-3">Project Weekly Data Form</h3>
+                    {% if message %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endif %}
                     {% csrf_token %}
                     {% for field in form %}
                         <span class="help-icon" data-toggle="tooltip" title="{{ field.help_text }}">&#9432;</span>{{ field.label_tag }}
