@@ -32,7 +32,7 @@
                             <li><a class="dropdown-item" href="{% url 'card_and_incident_page' %}">Cards</a></li>
                             {% if user.is_authenticated and user.user_type == "hse_inspector" or user.user_type == "project_manager" or user.user_type == "company_representative" %}
                             <li><a class="dropdown-item" href="{% url 'project_database_page' %}">Project Database</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="{% url 'site_observation_report_page' %}">Site Observation report</a></li>
                             {% endif %}
                         </ul>
                     </li>

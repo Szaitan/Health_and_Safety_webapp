@@ -44,7 +44,9 @@ data_after = ['confined space work permit', 'excavation permit', 'l.o.t.o', 'm.s
               'tools / equipment used correctly', 'tools / equipment in good condition',
               'operator certified for equipment', 'safe guards in place', 'cables / leads', 'site machinery',
               'reverse alarm', 'banksman']
-for n in data:
-    data_after.append(n.lower())
-print(data_after)
 
+data_after2 = []
+for n in data_after:
+    data_after2.append(n.replace(" ", "_"))
+
+print(data_after2)

@@ -3,11 +3,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404,redirect, render, reverse
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views import View
 from .views_functions import register_send_email
 from webapp.forms import AddUsertoProject, CreateProjectForm, CreateUserForm, EditUserForm, LoginForm, RegisterForm,\
-    CardAndIncidentForm, ProjectDatabaseForm
+    CardAndIncidentForm, ProjectDatabaseForm, SiteObservationReportForm
 from .models import CardAndIncident, CustomerCompany, CustomerCompanyEmails, CustomUser, Project, ProjectDatabase
 
 
@@ -386,6 +386,21 @@ class RegisterPage(View):
 
 class SiteObservationReportPage(View):
     def get(self, request):
-        return render(render, "webapp/site_observation_report.html", {
+        form = SiteObservationReportForm(current_user=request.user)
+        return render(request, "webapp/site_observation_report_page.html", {
+            "form": form,
+            "year": get_year(),
+        })
+
+    def post(self, request):
+        form = SiteObservationReportForm(request.POST, current_user=request.user)
+        if form.is_valid():
+            print(form.cleaned_data["head_protection"])
+            return render(request, "webapp/site_observation_report_page.html", {
+                "form": form,
+                "year": get_year(),
+            })
+        return render(request, "webapp/site_observation_report_page.html", {
+            "form": form,
             "year": get_year(),
         })

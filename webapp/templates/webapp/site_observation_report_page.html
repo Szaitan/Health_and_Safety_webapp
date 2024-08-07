@@ -7,9 +7,10 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
     <div class="row sor-div">
         <div class="col-lg-12">
-            <form action="{% url 'project_database_page' %}" method="POST">
+            <form action="{% url 'site_observation_report_page' %}" method="POST">
                 <h3 class="m-3">Site Observation Report</h3>
                 {% if message %}
                 <div class="alert alert-success" role="alert">
@@ -27,5 +28,7 @@
         </div>
     </div>
 </div>
+
+
 {% include 'footer.html' %}{% with year=year %}{% endwith %}
 {% endblock %}

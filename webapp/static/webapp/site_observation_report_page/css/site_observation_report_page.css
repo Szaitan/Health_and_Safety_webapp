@@ -1,0 +1,93 @@
+.sor-div {
+    text-align: center; /* Center objects in the area */
+    width: 60%;
+    height: auto;
+    background-color: #1a1a1a;
+    border-radius: 3%;
+    align-items: center;
+    margin: 30px 30px;
+    padding: 20px 0px;
+}
+
+.container {
+    display: flex;
+    min-height: 83vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.errorlist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: red;
+}
+
+.help-icon {
+    font-size: 20px;
+    display: inline-block;
+    padding-right: 5px;
+}
+
+#id_project, #id_contractor, #id_subcontractor, #id_date,
+ #id_head_protection, #id_eyes_protection, #id_high_visible_clothes,  #id_foot_protection, #id_hearing_protection,
+  #id_respiratory_protection,  #id_hands_protection, #id_fall_arrest_equipment, #id_general_work_permit, #id_hot_work_permit,
+  #id_confined_space_work_permit, #id_excavation_permit, #id_loto, #id_method_statement_and_risk_analysis,
+  #id_lifting_permit_manual_handling, #id_routes_clear_of_obstructions, #id_housekeeping_standard_adequate,
+  #id_materials_stored_safely, #id_correct_signage_posted, #id_barrier_workplace, #id_dust_protection,
+  #id_waste_materials_segregated, #id_mobile_phone_used_ok, #id_smoking_only_in_designated_areas,
+  #id_people_trained_for_site, #id_fire_extinguisher_and_water_bucket, #id_fire_watcher, #id_flammable_materials_removed,
+  #id_gas_bottles_storage_and_usage, #id_flame_arrestors_on_cylinders_and_torch, #id_welding_screens,
+  #id_scaffolding_erected_and_used_according_the_manual, #id_ladders_or_stepladders_secured_and_free_of_defects,
+  #id_personnel_trained_for_wah, #id_fall_arrest_equipment_worn_and_used_correctly, #id_safe_body_position,
+  #id_supervisor_for_wah_activities, #id_authorized_personnel, #id_lifting_coordinator_or_supervisor,
+  #id_no_people_under_suspended_load, #id_lifting_gears_in_good_condition, #id_tag_lines, #id_shored_edges,
+  #id_walkways_and_bridges_over_excavations_have_guardrails_and_toe_boards, #id_safe_and_enough_access,
+  #id_ladders_are_secured_and_extended_1_meter_above_the_edge_of_the_trench, #id_spoils,
+  #id_materials_and_equipment_set_back_minimum_1_meter_from_the_edge_of_the_excavation, #id_authorized_electrician,
+  #id_restricted_access_for_unauthorized_people, #id_proper_insulated_tools_are_used, #id_cabinets_are_closed_and_locked,
+  #id_specific_ppe_is_used, #id_permit_to_work_posted_on_the_entrance, #id_all_permit_to_work_requirements_are_in_place,
+  #id_only_authorized_personnel_for_confined_space_entry, #id_watchman_on_manhole, #id_all_registers_are_updated,
+  #id_correct_tools, #id_equipment_for_task, #id_tools_and_equipment_used_correctly, #id_tools_and_equipment_in_good_condition,
+  #id_operator_certified_for_equipment, #id_safe_guards_in_place, #id_cables_leads, #id_site_machinery, #id_reverse_alarm,
+  #id_banksman {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+    width: 40%;
+    text-font: 40px;
+}
+
+.send-button {
+    background-color: #1a1a1a;
+    height: 10%;
+    padding: 18px;
+    width: 40%;
+    display: block;
+    text-align: center;
+}
+
+.send-button:hover {
+    color: #00e600;
+}
+
+@media screen and (max-width: 800px) {
+    #id_project, #id_contractor, #id_subcontractor, #id_date,
+     #id_average_number_people, #id_hours_work {
+        width: 80%;
+    }
+
+    #issued_card {
+        width: 80%;
+    }
+
+    label {
+        font-size: 1.8em;
+    }
+
+    .send-button {
+        padding: 18px;
+        width: 40%;
+    }
+
+}
