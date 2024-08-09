@@ -4,6 +4,10 @@
     text-decoration: none;
 }
 
+.collapse-button:hover{
+    color: #00e600;
+}
+
 .container {
     display: flex;
     min-height: 83vh;
@@ -53,8 +57,9 @@
     text-font: 40px;
 }
 
-.data-project, .procedures{
+.data-project, .ppe, .procedures{
     border: solid;
+    border-color: #b3ffda;
     margin-bottom: 20px;
 }
 

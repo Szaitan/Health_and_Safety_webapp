@@ -60,11 +60,11 @@
                     </div>
                 </div>
             </div>
-            <div class="procedures">
-                <button type="button" class="btn btn-link collapse-button" data-toggle="collapse" data-target="#procedures-section" aria-expanded="false" aria-controls="procedures-section">
-                    Procedures &#9661;
+            <div class="ppe">
+                <button type="button" class="btn btn-link collapse-button" data-toggle="collapse" data-target="#ppe-section" aria-expanded="false" aria-controls="ppe-section">
+                    Personal Protective Equipment &#9661;
                 </button>
-                <div id="procedures-section" class="collapse show">
+                <div id="ppe-section" class="collapse show">
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-group">
@@ -128,6 +128,71 @@
                                 {{ form.fall_arrest_equipment.label_tag }}
                                 {{ form.fall_arrest_equipment }}
                                 {{ form.fall_arrest_equipment.errors }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="procedures">
+                <button type="button" class="btn btn-link collapse-button" data-toggle="collapse" data-target="#procedures-section" aria-expanded="false" aria-controls="procedures-section">
+                    Procedures &#9661;
+                </button>
+                <div id="procedures-section" class="collapse show">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.general_work_permit.help_text }}">&#9432;</span>
+                                {{ form.general_work_permit.label_tag }}
+                                {{ form.general_work_permit }}
+                                {{ form.general_work_permit.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.hot_work_permit.help_text }}">&#9432;</span>
+                                {{ form.hot_work_permit.label_tag }}
+                                {{ form.hot_work_permit }}
+                                {{ form.hot_work_permit.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.confined_space_work_permit.help_text }}">&#9432;</span>
+                                {{ form.confined_space_work_permit.label_tag }}
+                                {{ form.confined_space_work_permit }}
+                                {{ form.confined_space_work_permit.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.excavation_permit.help_text }}">&#9432;</span>
+                                {{ form.excavation_permit.label_tag }}
+                                {{ form.excavation_permit }}
+                                {{ form.excavation_permit.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.loto.help_text }}">&#9432;</span>
+                                {{ form.loto.label_tag }}
+                                {{ form.loto }}
+                                {{ form.loto.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.method_statement_and_risk_analysis.help_text }}">&#9432;</span>
+                                {{ form.method_statement_and_risk_analysis.label_tag }}
+                                {{ form.method_statement_and_risk_analysis }}
+                                {{ form.method_statement_and_risk_analysis.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.lifting_permit_manual_handling.help_text }}">&#9432;</span>
+                                {{ form.lifting_permit_manual_handling.label_tag }}
+                                {{ form.lifting_permit_manual_handling }}
+                                {{ form.lifting_permit_manual_handling.errors }}
                             </div>
                         </div>
                     </div>
