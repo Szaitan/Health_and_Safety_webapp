@@ -1,12 +1,7 @@
-.sor-div {
-    text-align: center; /* Center objects in the area */
-    width: 60%;
-    height: auto;
-    background-color: #1a1a1a;
-    border-radius: 3%;
-    align-items: center;
-    margin: 30px 30px;
-    padding: 20px 0px;
+.collapse-button{
+    font-size: 1.5em;
+    color: white;
+    text-decoration: none;
 }
 
 .container {
@@ -21,11 +16,6 @@
   margin: 0;
   padding: 0;
   color: red;
-}
-
-.procedures {
-    border-radius: 3%;
-    border: solid;
 }
 
 .help-icon {
@@ -63,6 +53,11 @@
     text-font: 40px;
 }
 
+.data-project, .procedures{
+    border: solid;
+    margin-bottom: 20px;
+}
+
 .send-button {
     background-color: #1a1a1a;
     height: 10%;
@@ -74,6 +69,18 @@
 
 .send-button:hover {
     color: #00e600;
+}
+
+.sor-div {
+    text-align: center; /* Center objects in the area */
+    width: 60%;
+    height: auto;
+    background-color: #1a1a1a;
+    border-radius: 3%;
+    align-items: center;
+    margin: 30px 30px;
+    padding: 20px 0px;
+    margin: auto;
 }
 
 @media screen and (max-width: 800px) {

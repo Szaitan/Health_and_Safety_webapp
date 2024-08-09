@@ -9,18 +9,21 @@
 {% block content %}
 {% include 'header.html' %}
 
-<div class="container">
-    <div class="row sor-div">
-        <div class="col-lg-12">
-            <form action="{% url 'site_observation_report_page' %}" method="POST">
-                <h3 class="m-3">Site Observation Report</h3>
-                {% if message %}
-                    <div class="alert alert-success" role="alert">
-                        {{ message }}
-                    </div>
-                {% endif %}
-                <div class="procedures">
-                    <h4 class="section-title">Procedures</h4>
+
+<div class="row sor-div">
+    <div class="col-lg-12">
+        <form action="{% url 'site_observation_report_page' %}" method="POST">
+            <h3 class="m-3">Site Observation Report</h3>
+            {% if message %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+            <div class="data-project">
+                <button type="button" class="btn btn-link collapse-button" data-toggle="collapse" data-target="#data-project-section" aria-expanded="false" aria-controls="data-project-section">
+                    Project Data &#9661;
+                </button>
+                <div id="data-project-section" class="collapse show">
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-group">
@@ -32,7 +35,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <span class="help-icon" data-toggle="tooltip" title="{{ form.contractor.help_text }}">&#9432;</span>
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.date.help_text }}">&#9432;</span>
                                 {{ form.date.label_tag }}
                                 {{ form.date }}
                                 {{ form.date.errors }}
@@ -40,7 +43,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <span class="help-icon" data-toggle="tooltip" title="{{ form.name_surname.help_text }}">&#9432;</span>
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.contractor.help_text }}">&#9432;</span>
                                 {{ form.contractor.label_tag }}
                                 {{ form.contractor }}
                                 {{ form.contractor.errors }}
@@ -54,21 +57,89 @@
                                 {{ form.subcontractor.errors }}
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="procedures">
+                <button type="button" class="btn btn-link collapse-button" data-toggle="collapse" data-target="#procedures-section" aria-expanded="false" aria-controls="procedures-section">
+                    Procedures &#9661;
+                </button>
+                <div id="procedures-section" class="collapse show">
+                    <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <span class="help-icon" data-toggle="tooltip" title="{{ form.subcontractor.help_text }}">&#9432;</span>
-                                {{ form.subcontractor.label_tag }}
-                                {{ form.subcontractor }}
-                                {{ form.subcontractor.errors }}
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.head_protection.help_text }}">&#9432;</span>
+                                {{ form.head_protection.label_tag }}
+                                {{ form.head_protection }}
+                                {{ form.head_protection.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.eyes_protection.help_text }}">&#9432;</span>
+                                {{ form.eyes_protection.label_tag }}
+                                {{ form.eyes_protection }}
+                                {{ form.eyes_protection.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.high_visible_clothes.help_text }}">&#9432;</span>
+                                {{ form.high_visible_clothes.label_tag }}
+                                {{ form.high_visible_clothes }}
+                                {{ form.high_visible_clothes.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.foot_protection.help_text }}">&#9432;</span>
+                                {{ form.foot_protection.label_tag }}
+                                {{ form.foot_protection }}
+                                {{ form.foot_protection.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.hearing_protection.help_text }}">&#9432;</span>
+                                {{ form.hearing_protection.label_tag }}
+                                {{ form.hearing_protection }}
+                                {{ form.hearing_protection.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.respiratory_protection.help_text }}">&#9432;</span>
+                                {{ form.respiratory_protection.label_tag }}
+                                {{ form.respiratory_protection }}
+                                {{ form.respiratory_protection.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.hands_protection.help_text }}">&#9432;</span>
+                                {{ form.hands_protection.label_tag }}
+                                {{ form.hands_protection }}
+                                {{ form.hands_protection.errors }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <span class="help-icon" data-toggle="tooltip" title="{{ form.fall_arrest_equipment.help_text }}">&#9432;</span>
+                                {{ form.fall_arrest_equipment.label_tag }}
+                                {{ form.fall_arrest_equipment }}
+                                {{ form.fall_arrest_equipment.errors }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-secondary send-button mx-auto m-2">Send</button>
-            </form>
-        </div>
+            </div>
+            <button class="btn btn-secondary send-button mx-auto m-2">Send</button>
+        </form>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 {% include 'footer.html' %}{% with year=year %}{% endwith %}
 {% endblock %}
+
