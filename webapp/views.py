@@ -394,8 +394,12 @@ class SiteObservationReportPage(View):
 
     def post(self, request):
         form = SiteObservationReportForm(request.POST, current_user=request.user)
+        print("here")
+        print(form.errors)
         if form.is_valid():
             print(form.cleaned_data["head_protection"])
+            print(form.cleaned_data["loto"])
+            print(form.cleaned_data["date"])
             return render(request, "webapp/site_observation_report_page.html", {
                 "form": form,
                 "year": get_year(),
