@@ -140,89 +140,107 @@ class SiteObservationReportForm(forms.Form):
     head_protection = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Head protection:")
+        help_text="Was head protection wore:")
     eyes_protection = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Eyes protection:")
+        help_text="Was eyes protection wore:")
     high_visible_clothes = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="High visible cloths:")
+        help_text="Were high visible cloths wore:")
     foot_protection = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Foot protection:")
+        help_text="Was correct foot protection boots wore:")
     hearing_protection = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Hearing protection:")
+        help_text="Was hearing protection wore:")
     respiratory_protection = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Respiratory protection:")
+        help_text="Was respiratory protection wore:")
     hands_protection = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Hands protection:")
-    fall_arrest_equipment = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                              initial="n/a",
-                                              help_text="Fall arrest equipment:")
-    general_work_permit = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                            initial="n/a",
-                                            help_text="General work permit:")
-    hot_work_permit = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                        initial="n/a",
-                                        help_text="Hot work permit:")
+        help_text="Were hands protection equipment wore:")
+    fall_arrest_equipment = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Were fall arrest equipment wore:")
+    general_work_permit = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Was general work permit correct, in place, valid etc.:")
+    hot_work_permit = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Was hot work permit correct, in place, valid etc.::")
     confined_space_work_permit = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Confined space work permit:")
-    excavation_permit = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                          initial="n/a",
-                                          help_text="Excavation protection:")
-    loto = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                             initial="n/a",
-                             help_text="Log out, tag out status:")
+        help_text="Was confined space work permit correct, in place, valid etc.:")
+    excavation_permit = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Was excavation protection correct, etc.:")
+    loto = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Were rules regarding log out, tag out in place, etc.:")
     method_statement_and_risk_analysis = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Method statement and risk analysis:")
+        help_text="Were method statement or risk analysis correct, in place, valid, etc.:")
     lifting_permit_manual_handling = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Lifting permit manual handling:")
+        help_text="Was lifting permit manual handling on site:")
     routes_clear_of_obstructions = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Routes clear of obstructions:")
+        help_text="Were routes clear of obstructions:")
     housekeeping_standard_adequate = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
         initial="n/a",
-        help_text="Housekeeping standard adequate:")
-    materials_stored_safely = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                                initial="n/a",
-                                                help_text="Materials stored safely:")
-    correct_signage_posted = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                               initial="n/a")
-    barrier_workplace = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                          initial="n/a")
-    dust_protection = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                        initial="n/a")
+        help_text="Were kept housekeeping standard adequate:")
+    materials_stored_safely = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Were materials stored safely:")
+    correct_signage_posted = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Were correct signage post used:")
+    barrier_workplace = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Was workplace barrier form rest of area:")
+    dust_protection = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Was dust protection equipment, rules used according to regulation:")
     waste_materials_segregated = forms.ChoiceField(
         choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-        initial="n/a")
-    mobile_phone_used_ok = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                             initial="n/a")
-    smoking_only_in_designated_areas = forms.ChoiceField(choices=
-                                                         (("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                                         initial="n/a")
-    people_trained_for_site = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
-                                                initial="n/a")
-    fire_extinguisher_and_water_bucket = forms.ChoiceField(choices=
-                                                           (("n/a", "N/A"), ("present", "Present"),
-                                                            ("absent", "Absent")),
-                                                           initial="n/a")
+        initial="n/a",
+        help_text="Where waste materials segregated correctly:")
+    mobile_phone_used_ok = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Was mobile phone used correctly, without increasing the risk of accident:")
+    smoking_only_in_designated_areas = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Was workplace barrier form rest of area:")
+    people_trained_for_site = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Does people on construction site after construction training, was the training still valid, etc.:")
+    fire_extinguisher_and_water_bucket = forms.ChoiceField(
+        choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
+        initial="n/a",
+        help_text="Were fire extinguisher or other form of fire protection present during hot works:")
     fire_watcher = forms.ChoiceField(choices=(("n/a", "N/A"), ("present", "Present"), ("absent", "Absent")),
                                      initial="n/a")
     flammable_materials_removed = forms.ChoiceField(

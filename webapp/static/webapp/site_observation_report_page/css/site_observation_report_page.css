@@ -57,7 +57,7 @@
     text-font: 40px;
 }
 
-.data-project, .ppe, .procedures{
+.data-project, .ppe, .procedures, .safe_workspace{
     border: solid;
     border-color: #b3ffda;
     margin-bottom: 20px;
